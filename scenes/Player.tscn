@@ -1,14 +1,14 @@
 [gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://scripts/Player.gd" type="Script" id=1]
-[ext_resource path="res://scripts/Body.gd" type="Script" id=2]
-[ext_resource path="res://images/playerShip1_blue.png" type="Texture" id=3]
-[ext_resource path="res://images/fire06.png" type="Texture" id=4]
-[ext_resource path="res://images/fire07.png" type="Texture" id=5]
-[ext_resource path="res://images/fire04.png" type="Texture" id=6]
-[ext_resource path="res://images/fire05.png" type="Texture" id=7]
+[ext_resource path="res://scripts/Body.gd" type="Script" id=1]
+[ext_resource path="res://images/playerShip1_blue.png" type="Texture" id=2]
+[ext_resource path="res://images/fire06.png" type="Texture" id=3]
+[ext_resource path="res://images/fire07.png" type="Texture" id=4]
+[ext_resource path="res://images/fire04.png" type="Texture" id=5]
+[ext_resource path="res://images/fire05.png" type="Texture" id=6]
+[ext_resource path="res://scenes/Weapon.tscn" type="PackedScene" id=7]
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=16]
 
 animations = [ {
 "frames": [  ],
@@ -16,29 +16,29 @@ animations = [ {
 "name": "default",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ), ExtResource( 5 ) ],
+"frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "accelerate",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
+"frames": [ ExtResource( 5 ), ExtResource( 6 ) ],
 "loop": true,
 "name": "deccelerate",
 "speed": 10.0
 } ]
 
-[sub_resource type="Curve" id=3]
+[sub_resource type="Curve" id=17]
 
 min_value = 0.0
 max_value = 1.0
 bake_resolution = 100
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.995434, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=4]
+[sub_resource type="CurveTexture" id=18]
 
 flags = 4
 width = 2048
-curve = SubResource( 3 )
+curve = SubResource( 17 )
 
 [sub_resource type="Gradient" id=14]
 
@@ -51,7 +51,7 @@ flags = 4
 gradient = SubResource( 14 )
 width = 2048
 
-[sub_resource type="ParticlesMaterial" id=2]
+[sub_resource type="ParticlesMaterial" id=19]
 
 render_priority = 0
 trail_divisor = 1
@@ -82,7 +82,7 @@ angle = 0.0
 angle_random = 0.0
 scale = 5.0
 scale_random = 0.0
-scale_curve = SubResource( 4 )
+scale_curve = SubResource( 18 )
 color = Color( 1, 1, 1, 1 )
 hue_variation = 0.0
 hue_variation_random = 0.0
@@ -94,8 +94,6 @@ anim_loop = false
 _sections_unfolded = [ "Color", "Trail" ]
 
 [node name="Player" type="Node" index="0"]
-
-script = ExtResource( 1 )
 
 [node name="Node2D" type="Node2D" parent="." index="0"]
 
@@ -123,8 +121,8 @@ linear_velocity = Vector2( 0, 0 )
 linear_damp = -1.0
 angular_velocity = 0.0
 angular_damp = 5.0
-script = ExtResource( 2 )
-_sections_unfolded = [ "Transform" ]
+script = ExtResource( 1 )
+_sections_unfolded = [ "Collision", "Transform" ]
 rotation_speed = 200
 move_speed = 8000
 
@@ -134,13 +132,12 @@ rotation = 1.5708
 scale = Vector2( 0.5, 0.5 )
 build_mode = 0
 polygon = PoolVector2Array( 47.7379, 24.3535, 48.385, -7.99986, 39.3261, 0.0884781, 16.0316, -13.1764, 9.56097, -37.1179, -9.85103, -38.0885, -13.0864, -14.7941, -36.3808, 0.735542, -47.7045, -9.94106, -50.2927, -4.76453, -46.4103, 26.6182, -40.2632, 22.7358, -14.057, 28.883, -6.29216, 37.6184, 9.23744, 39.236, 14.7375, 27.9124 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="Node2D/Body" index="1"]
 
 rotation = 1.5708
 scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 3 )
+texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="LeftPropeller" type="AnimatedSprite" parent="Node2D/Body" index="2"]
@@ -148,7 +145,7 @@ _sections_unfolded = [ "Transform" ]
 position = Vector2( -22.4089, -22.1657 )
 rotation = 1.5708
 scale = Vector2( 0.5, 0.5 )
-frames = SubResource( 1 )
+frames = SubResource( 16 )
 animation = "default"
 playing = true
 _sections_unfolded = [ "Transform" ]
@@ -171,7 +168,7 @@ fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = false
 draw_order = 0
-process_material = SubResource( 2 )
+process_material = SubResource( 19 )
 texture = null
 normal_map = null
 h_frames = 1
@@ -183,14 +180,14 @@ _sections_unfolded = [ "Drawing", "Process Material", "Textures", "Transform" ]
 position = Vector2( -23.9205, 23.557 )
 rotation = 1.5708
 scale = Vector2( 0.5, 0.5 )
-frames = SubResource( 1 )
+frames = SubResource( 16 )
 animation = "default"
 playing = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="Emitter" type="Particles2D" parent="Node2D/Body/RightPropeller" index="0"]
 
-position = Vector2( -1.91821, -10.123 )
+position = Vector2( -1.91833, -16.292 )
 rotation = -1.5708
 scale = Vector2( 0.4, 0.4 )
 emitting = true
@@ -206,11 +203,25 @@ fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = false
 draw_order = 0
-process_material = SubResource( 2 )
+process_material = SubResource( 19 )
 texture = null
 normal_map = null
 h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Drawing", "Process Material", "Textures", "Transform" ]
+
+[node name="LeftWeapon" parent="Node2D/Body" index="4" instance=ExtResource( 7 )]
+
+position = Vector2( 6.24182, -23.2833 )
+rotation = 1.5708
+scale = Vector2( 0.24058, 0.24058 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="RightWeapon" parent="Node2D/Body" index="5" instance=ExtResource( 7 )]
+
+position = Vector2( 6.58289, 23.2672 )
+rotation = 1.5708
+scale = Vector2( 0.24058, 0.24058 )
+_sections_unfolded = [ "Transform" ]
 
 

@@ -14,6 +14,10 @@ config/name="SpaceTimeTraveler"
 run/main_scene="res://scenes/Player.tscn"
 config/icon="res://icon.png"
 
+[layer_names]
+
+2d_physics/layer_1="player"
+
 [physics]
 
 2d/default_gravity=0
