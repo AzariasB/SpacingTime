@@ -2,13 +2,13 @@
 
 [ext_resource path="res://scripts/Body.gd" type="Script" id=1]
 [ext_resource path="res://images/playerShip1_blue.png" type="Texture" id=2]
-[ext_resource path="res://images/fire06.png" type="Texture" id=3]
-[ext_resource path="res://images/fire07.png" type="Texture" id=4]
-[ext_resource path="res://images/fire04.png" type="Texture" id=5]
-[ext_resource path="res://images/fire05.png" type="Texture" id=6]
+[ext_resource path="res://images/fire04.png" type="Texture" id=3]
+[ext_resource path="res://images/fire05.png" type="Texture" id=4]
+[ext_resource path="res://images/fire06.png" type="Texture" id=5]
+[ext_resource path="res://images/fire07.png" type="Texture" id=6]
 [ext_resource path="res://scenes/Weapon.tscn" type="PackedScene" id=7]
 
-[sub_resource type="SpriteFrames" id=16]
+[sub_resource type="SpriteFrames" id=1]
 
 animations = [ {
 "frames": [  ],
@@ -18,44 +18,44 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
 "loop": true,
-"name": "accelerate",
-"speed": 5.0
+"name": "deccelerate",
+"speed": 10.0
 }, {
 "frames": [ ExtResource( 5 ), ExtResource( 6 ) ],
 "loop": true,
-"name": "deccelerate",
-"speed": 10.0
+"name": "accelerate",
+"speed": 5.0
 } ]
 
-[sub_resource type="Curve" id=17]
+[sub_resource type="Curve" id=2]
 
 min_value = 0.0
 max_value = 1.0
 bake_resolution = 100
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.995434, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=18]
+[sub_resource type="CurveTexture" id=3]
 
 flags = 4
 width = 2048
-curve = SubResource( 17 )
+curve = SubResource( 2 )
 
-[sub_resource type="Gradient" id=14]
+[sub_resource type="Gradient" id=4]
 
 offsets = PoolRealArray( 0, 1 )
 colors = PoolColorArray( 0.933594, 0.0875244, 0.0875244, 1, 0.808594, 0.636452, 0.120026, 0 )
 
-[sub_resource type="GradientTexture" id=15]
+[sub_resource type="GradientTexture" id=5]
 
 flags = 4
-gradient = SubResource( 14 )
+gradient = SubResource( 4 )
 width = 2048
 
-[sub_resource type="ParticlesMaterial" id=19]
+[sub_resource type="ParticlesMaterial" id=6]
 
 render_priority = 0
 trail_divisor = 1
-trail_color_modifier = SubResource( 15 )
+trail_color_modifier = SubResource( 5 )
 emission_shape = 1
 emission_sphere_radius = 10.0
 flag_align_y = false
@@ -82,7 +82,7 @@ angle = 0.0
 angle_random = 0.0
 scale = 5.0
 scale_random = 0.0
-scale_curve = SubResource( 18 )
+scale_curve = SubResource( 3 )
 color = Color( 1, 1, 1, 1 )
 hue_variation = 0.0
 hue_variation_random = 0.0
@@ -93,11 +93,10 @@ anim_offset_random = 0.0
 anim_loop = false
 _sections_unfolded = [ "Color", "Trail" ]
 
-[node name="Player" type="Node" index="0"]
+[node name="Player" type="Node"]
 
 [node name="Node2D" type="Node2D" parent="." index="0"]
 
-position = Vector2( 524.477, 285.028 )
 scale = Vector2( 0.5, 0.5 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 
@@ -145,7 +144,7 @@ _sections_unfolded = [ "Transform" ]
 position = Vector2( -22.4089, -22.1657 )
 rotation = 1.5708
 scale = Vector2( 0.5, 0.5 )
-frames = SubResource( 16 )
+frames = SubResource( 1 )
 animation = "default"
 playing = true
 _sections_unfolded = [ "Transform" ]
@@ -168,7 +167,7 @@ fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = false
 draw_order = 0
-process_material = SubResource( 19 )
+process_material = SubResource( 6 )
 texture = null
 normal_map = null
 h_frames = 1
@@ -180,7 +179,7 @@ _sections_unfolded = [ "Drawing", "Process Material", "Textures", "Transform" ]
 position = Vector2( -23.9205, 23.557 )
 rotation = 1.5708
 scale = Vector2( 0.5, 0.5 )
-frames = SubResource( 16 )
+frames = SubResource( 1 )
 animation = "default"
 playing = true
 _sections_unfolded = [ "Transform" ]
@@ -203,7 +202,7 @@ fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = false
 draw_order = 0
-process_material = SubResource( 19 )
+process_material = SubResource( 6 )
 texture = null
 normal_map = null
 h_frames = 1
@@ -223,5 +222,31 @@ position = Vector2( 6.58289, 23.2672 )
 rotation = 1.5708
 scale = Vector2( 0.24058, 0.24058 )
 _sections_unfolded = [ "Transform" ]
+
+[node name="Camera2D" type="Camera2D" parent="Node2D/Body" index="6"]
+
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = false
+smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = true
+editor_draw_drag_margin = true
+_sections_unfolded = [ "Drag Margin", "Editor", "Offset" ]
 
 
