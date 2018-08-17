@@ -7,13 +7,15 @@ export(int) var rotation_speed = 200
 export(int) var move_speed = 2000
 var input_rotation = 0
 var speed_multiplier = 1
-var v_size = null
 onready var cam = $Camera2D
+var globals
 
 func _ready():
-	# Called when the node is added to the scene for the first time.
-	# Initialization here
-	v_size = get_viewport().size
+	globals = get_tree().root.get_node("/root/globals")
+	#cam.limit_left = globals.BORDERS.position.x
+	#cam.limit_right = globals.BORDERS.end.x
+	#cam.limit_top = globals.BORDERS.position.y
+	#cam.limit_bottom = globals.BORDERS.end.y
 	set_process(true)
 
 func get_input():
