@@ -39,12 +39,13 @@ func get_input():
 	$Sprite/LeftPropeller.play(animation)
 	$Sprite/RightPropeller.play(animation)
 	
-	if Input.is_action_pressed("ui_select"):
+	"""if Input.is_action_pressed("ui_select"):
 		$Sprite/LeftWeapon.shoot()
 		$Sprite/RightWeapon.shoot()
 	else:
 		$Sprite/LeftWeapon.stop()
 		$Sprite/RightWeapon.stop()
+	"""
 		
 	
 func _physics_process(delta):

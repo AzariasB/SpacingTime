@@ -9,7 +9,7 @@ custom_solver_bias = 0.0
 radius = 1.42089
 height = 4.88964
 
-[node name="SimpleBullet" type="RigidBody2D" index="0"]
+[node name="SimpleBullet" type="RigidBody2D"]
 
 input_pickable = false
 collision_layer = 2

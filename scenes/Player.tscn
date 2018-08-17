@@ -108,6 +108,7 @@ _sections_unfolded = [ "Color", "Hue Variation", "Trail" ]
 
 [node name="Node2D" type="Node2D" parent="." index="0"]
 
+editor/display_folded = true
 _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="Body" type="RigidBody2D" parent="Node2D" index="0"]
