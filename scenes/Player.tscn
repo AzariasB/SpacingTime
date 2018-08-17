@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scripts/Body.gd" type="Script" id=1]
 [ext_resource path="res://images/playerShip1_blue.png" type="Texture" id=2]
@@ -26,6 +26,17 @@ animations = [ {
 "name": "accelerate",
 "speed": 5.0
 } ]
+
+[sub_resource type="Gradient" id=7]
+
+offsets = PoolRealArray( 0, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=8]
+
+flags = 4
+gradient = SubResource( 7 )
+width = 2048
 
 [sub_resource type="Curve" id=2]
 
@@ -83,7 +94,7 @@ angle_random = 0.0
 scale = 5.0
 scale_random = 0.0
 scale_curve = SubResource( 3 )
-color = Color( 1, 1, 1, 1 )
+color_ramp = SubResource( 8 )
 hue_variation = 0.0
 hue_variation_random = 0.0
 anim_speed = 0.0
@@ -91,13 +102,12 @@ anim_speed_random = 0.0
 anim_offset = 0.0
 anim_offset_random = 0.0
 anim_loop = false
-_sections_unfolded = [ "Color", "Trail" ]
+_sections_unfolded = [ "Color", "Hue Variation", "Trail" ]
 
-[node name="Player" type="Node"]
+[node name="Player" type="Node" index="0"]
 
 [node name="Node2D" type="Node2D" parent="." index="0"]
 
-scale = Vector2( 0.5, 0.5 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="Body" type="RigidBody2D" parent="Node2D" index="0"]
@@ -125,31 +135,51 @@ _sections_unfolded = [ "Collision", "Transform" ]
 rotation_speed = 200
 move_speed = 8000
 
-[node name="Collision" type="CollisionPolygon2D" parent="Node2D/Body" index="0"]
+[node name="Camera2D" type="Camera2D" parent="Node2D/Body" index="0"]
 
-rotation = 1.5708
-scale = Vector2( 0.5, 0.5 )
-build_mode = 0
-polygon = PoolVector2Array( 47.7379, 24.3535, 48.385, -7.99986, 39.3261, 0.0884781, 16.0316, -13.1764, 9.56097, -37.1179, -9.85103, -38.0885, -13.0864, -14.7941, -36.3808, 0.735542, -47.7045, -9.94106, -50.2927, -4.76453, -46.4103, 26.6182, -40.2632, 22.7358, -14.057, 28.883, -6.29216, 37.6184, 9.23744, 39.236, 14.7375, 27.9124 )
+visible = false
+position = Vector2( -1.73409, 1.81254 )
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit_left = -1000
+limit_top = -500
+limit_right = 1000
+limit_bottom = 500
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = true
+editor_draw_drag_margin = true
+_sections_unfolded = [ "Limit", "Smoothing" ]
 
 [node name="Sprite" type="Sprite" parent="Node2D/Body" index="1"]
 
+position = Vector2( -0.387421, 1.16227 )
 rotation = 1.5708
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="LeftPropeller" type="AnimatedSprite" parent="Node2D/Body" index="2"]
+[node name="LeftPropeller" type="AnimatedSprite" parent="Node2D/Body/Sprite" index="0"]
 
-position = Vector2( -22.4089, -22.1657 )
-rotation = 1.5708
-scale = Vector2( 0.5, 0.5 )
+position = Vector2( -36.7139, 53.0372 )
 frames = SubResource( 1 )
 animation = "default"
 playing = true
 _sections_unfolded = [ "Transform" ]
 
-[node name="Emitter" type="Particles2D" parent="Node2D/Body/LeftPropeller" index="0"]
+[node name="Emitter" type="Particles2D" parent="Node2D/Body/Sprite/LeftPropeller" index="0"]
 
 position = Vector2( 0.859253, -13.9204 )
 rotation = -1.5708
@@ -174,19 +204,17 @@ h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Drawing", "Process Material", "Textures", "Transform" ]
 
-[node name="RightPropeller" type="AnimatedSprite" parent="Node2D/Body" index="3"]
+[node name="RightPropeller" type="AnimatedSprite" parent="Node2D/Body/Sprite" index="1"]
 
-position = Vector2( -23.9205, 23.557 )
-rotation = 1.5708
-scale = Vector2( 0.5, 0.5 )
+position = Vector2( 50.612, 55.5694 )
 frames = SubResource( 1 )
 animation = "default"
 playing = true
 _sections_unfolded = [ "Transform" ]
 
-[node name="Emitter" type="Particles2D" parent="Node2D/Body/RightPropeller" index="0"]
+[node name="Emitter" type="Particles2D" parent="Node2D/Body/Sprite/RightPropeller" index="0"]
 
-position = Vector2( -1.91833, -16.292 )
+position = Vector2( -4.73999, -15.9155 )
 rotation = -1.5708
 scale = Vector2( 0.4, 0.4 )
 emitting = true
@@ -209,44 +237,23 @@ h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Drawing", "Process Material", "Textures", "Transform" ]
 
-[node name="LeftWeapon" parent="Node2D/Body" index="4" instance=ExtResource( 7 )]
+[node name="LeftWeapon" parent="Node2D/Body/Sprite" index="2" instance=ExtResource( 7 )]
 
-position = Vector2( 6.24182, -23.2833 )
-rotation = 1.5708
+position = Vector2( -46.335, -11.8593 )
 scale = Vector2( 0.24058, 0.24058 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="RightWeapon" parent="Node2D/Body" index="5" instance=ExtResource( 7 )]
+[node name="RightWeapon" parent="Node2D/Body/Sprite" index="3" instance=ExtResource( 7 )]
 
-position = Vector2( 6.58289, 23.2672 )
-rotation = 1.5708
+position = Vector2( 47.7609, -11.8168 )
 scale = Vector2( 0.24058, 0.24058 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Camera2D" type="Camera2D" parent="Node2D/Body" index="6"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Node2D/Body" index="2"]
 
-anchor_mode = 1
-rotating = false
-current = true
-zoom = Vector2( 1, 1 )
-limit_left = -10000000
-limit_top = -10000000
-limit_right = 10000000
-limit_bottom = 10000000
-limit_smoothed = false
-drag_margin_h_enabled = true
-drag_margin_v_enabled = true
-smoothing_enabled = false
-smoothing_speed = 5.0
-offset_v = 0.0
-offset_h = 0.0
-drag_margin_left = 0.2
-drag_margin_top = 0.2
-drag_margin_right = 0.2
-drag_margin_bottom = 0.2
-editor_draw_screen = true
-editor_draw_limits = true
-editor_draw_drag_margin = true
-_sections_unfolded = [ "Drag Margin", "Editor", "Offset" ]
+position = Vector2( -2.3494, 2.23562 )
+scale = Vector2( 1.90151, 2.02486 )
+build_mode = 0
+polygon = PoolVector2Array( 4.62445, 3.29858, 1.17766, 8.37594, 3.34035, 11.6762, -5.85109, 11.1685, -5.1811, 8.67669, -6.45935, 3.17164, -9.50063, 1.77537, -9.56822, -2.34999, -6.86485, -4.19054, -5.58075, -12.2509, 2.86727, -13.1394, 3.27277, -11.2354, 1.448, -9.58524, 4.48928, -4.0636, 11.4505, -2.60386, 11.6532, 1.7119 )
 
 

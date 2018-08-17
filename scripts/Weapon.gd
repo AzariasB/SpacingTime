@@ -13,7 +13,7 @@ func try_shoot():
 	if not is_shooting:
 		$ResetTimer.stop()
 		return
-	var rot = get_parent().rotation
+	var rot = get_global_transform().get_rotation() - PI / 2
 	var bullet = bullet_type.instance()
 	bullet.position = position
 	bullet.linear_velocity = Vector2(cos(rot), sin(rot)) * bullet_speed

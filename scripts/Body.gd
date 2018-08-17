@@ -7,10 +7,13 @@ export(int) var rotation_speed = 200
 export(int) var move_speed = 2000
 var input_rotation = 0
 var speed_multiplier = 1
+var v_size = null
+onready var cam = $Camera2D
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
+	v_size = get_viewport().size
 	set_process(true)
 
 func get_input():
@@ -31,15 +34,15 @@ func get_input():
 	else:
 		speed_multiplier = 1
 	
-	$LeftPropeller.play(animation)
-	$RightPropeller.play(animation)
+	$Sprite/LeftPropeller.play(animation)
+	$Sprite/RightPropeller.play(animation)
 	
 	if Input.is_action_pressed("ui_select"):
-		$LeftWeapon.shoot()
-		$RightWeapon.shoot()
+		$Sprite/LeftWeapon.shoot()
+		$Sprite/RightWeapon.shoot()
 	else:
-		$LeftWeapon.stop()
-		$RightWeapon.stop()
+		$Sprite/LeftWeapon.stop()
+		$Sprite/RightWeapon.stop()
 		
 	
 func _physics_process(delta):
@@ -47,8 +50,19 @@ func _physics_process(delta):
 	if input_rotation != 0:
 		angular_velocity = input_rotation * rotation_speed * delta
 	linear_velocity = Vector2(cos(rotation), sin(rotation)) * delta * move_speed * speed_multiplier
+	
+	var c_pos = cam.get_camera_position()
+	if c_pos.y < cam.limit_top:
+		position.y = cam.limit_bottom
+	elif c_pos.y > cam.limit_bottom:
+		position.y = cam.limit_top
+		
+	if c_pos.x < cam.limit_left + 50:
+		position.x = cam.limit_right
+	elif c_pos.x > cam.limit_right - 50:
+		position.x = cam.limit_left
 
-
+	
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
