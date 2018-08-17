@@ -24,7 +24,7 @@ _sections_unfolded = [ "Resource" ]
 render_priority = 0
 shader = SubResource( 1 )
 
-[node name="Root" type="Node" index="0"]
+[node name="Root" type="Node"]
 
 [node name="Player" parent="." index="0" instance=ExtResource( 1 )]
 

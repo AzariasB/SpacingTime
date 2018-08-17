@@ -10,7 +10,9 @@ func _ready():
 	$ResetTimer.start()
 
 func try_shoot():
-	if not is_shooting: return
+	if not is_shooting:
+		$ResetTimer.stop()
+		return
 	var rot = get_parent().rotation
 	var bullet = bullet_type.instance()
 	bullet.position = position
@@ -19,6 +21,9 @@ func try_shoot():
 	add_child(bullet)
 
 func shoot():
+	if $ResetTimer.is_stopped():
+		$ResetTimer.start()
+		try_shoot()
 	is_shooting = true
 	
 func stop():
