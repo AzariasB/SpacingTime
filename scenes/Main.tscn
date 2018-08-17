@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://images/backgrounds/blue.png" type="Texture" id=2]
+[ext_resource path="res://images/backgrounds/stars.png" type="Texture" id=3]
 
 [sub_resource type="Shader" id=1]
 
@@ -45,10 +46,11 @@ _sections_unfolded = [ "Scroll" ]
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" index="0"]
 
 material = SubResource( 2 )
-motion_scale = Vector2( 1, 1 )
+z_index = -2
+motion_scale = Vector2( 0.1, 0.1 )
 motion_offset = Vector2( 0, 0 )
 motion_mirroring = Vector2( 256, 256 )
-_sections_unfolded = [ "Material", "Motion", "Visibility" ]
+_sections_unfolded = [ "Material", "Motion", "Visibility", "Z Index" ]
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer" index="0"]
 
@@ -57,5 +59,22 @@ texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 1200, 1200 )
 _sections_unfolded = [ "Animation", "Offset", "Region" ]
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground" index="1"]
+
+z_index = -1
+motion_scale = Vector2( 0.5, 0.5 )
+motion_offset = Vector2( 0, 0 )
+motion_mirroring = Vector2( 256, 256 )
+_sections_unfolded = [ "Material", "Motion" ]
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer2" index="0"]
+
+position = Vector2( 519.167, 303.511 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 2400, 2400 )
+_sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
 
 
