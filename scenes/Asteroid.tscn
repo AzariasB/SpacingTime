@@ -8,7 +8,7 @@
 custom_solver_bias = 0.0
 radius = 10.0
 
-[node name="Asteroid" type="Node2D"]
+[node name="Asteroid" type="Node2D" index="0"]
 
 [node name="AsteroidBody" type="RigidBody2D" parent="." index="0"]
 
@@ -43,5 +43,12 @@ _sections_unfolded = [ "Transform" ]
 position = Vector2( -1.34488, -1.44791 )
 scale = Vector2( 4.77495, 4.51871 )
 shape = SubResource( 1 )
+
+[node name="Timer" type="Timer" parent="AsteroidBody" index="2"]
+
+process_mode = 1
+wait_time = 10.0
+one_shot = true
+autostart = true
 
 

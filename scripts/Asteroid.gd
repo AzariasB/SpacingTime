@@ -3,6 +3,7 @@ extends RigidBody2D
 var BORDERS
 var small = load("res://scenes/SmallAsteroid.tscn")
 var puff = load("res://scenes/Puff.tscn")
+onready var timer = $Timer
 
 func _ready():
 	# Choose on which side to spawn, and where to go, and how to rotate
@@ -24,19 +25,30 @@ func body_collide(body):
 	print(body.name)
 	explode()
 
+func _destroy_timer():
+	remove_child(timer)
+	timer = null
+
 func spawn_inside(borders):
-	var x_pos = rand_range(BORDERS.position.x, BORDERS.end.x)
-	var y_pos = rand_range(BORDERS.position.y, BORDERS.end.y)
-	global_position = Vector2(x_pos, y_pos)
-	
+	var spwn_side = randi() % 4
+	match(spwn_side):
+		0: _do_spawn(Vector2(BORDERS.position.x, rand_range(BORDERS.position.y, BORDERS.end.y)))
+		1: _do_spawn(Vector2(rand_range(BORDERS.position.x, BORDERS.end.x ), BORDERS.position.y ))
+		2: _do_spawn(Vector2(BORDERS.end.x, rand_range(BORDERS.position.y, BORDERS.end.y) ) )
+		_: _do_spawn(Vector2(rand_range(BORDERS.position.x, BORDERS.end.x), BORDERS.end.y))
+
+func _do_spawn(from_pos):
+	global_position = from_pos
+	var target = Vector2(
+		rand_range(BORDERS.position.x, BORDERS.end.x),
+		rand_range(BORDERS.position.y, BORDERS.end.y)
+	)
+	var angle = target.angle_to_point(from_pos)
 	angular_velocity = rand_range(0, 2 * PI) + 0.1
-	
-	var angle = rand_range(0, 2 * PI)
-	linear_velocity = Vector2(cos(angle), sin(angle)) * 20
-	
+	linear_velocity = Vector2(cos(angle), sin(angle)) * rand_range(50, 100)
 
 func _physics_process(delta):
-	if not BORDERS.has_point(global_position):
+	if timer == null and not BORDERS.has_point(global_position):
 		get_parent().remove_child(self)
 
 

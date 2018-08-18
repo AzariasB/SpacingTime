@@ -21,7 +21,7 @@ animations = [ {
 } ]
 _sections_unfolded = [ "Resource" ]
 
-[node name="Puff" type="AnimatedSprite" index="0"]
+[node name="Puff" type="AnimatedSprite"]
 
 frames = SubResource( 1 )
 animation = "default"
