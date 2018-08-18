@@ -1,13 +1,16 @@
 extends RigidBody2D
 
 var BORDERS
+var global
 var small = load("res://scenes/SmallAsteroid.tscn")
 var puff = load("res://scenes/Puff.tscn")
 onready var timer = $Timer
 
+
 func _ready():
 	# Choose on which side to spawn, and where to go, and how to rotate
 	BORDERS = get_tree().root.get_node("/root/globals").BORDERS
+	global = get_tree().root.get_node("/root/globals")
 	if name != "SmallAsteroidBody":
 		spawn_inside(BORDERS)
 	set_process(true)
@@ -19,6 +22,7 @@ func body_collide(body):
 		par.get_parent().remove_child(par)
 		var n_puff = puff.instance()
 		n_puff.global_position = global_position
+		global.increment_score()
 		get_tree().root.add_child(n_puff)
 	elif "SimpleBullet" in body.name:
 		body.get_parent().remove_child(body)
@@ -43,7 +47,7 @@ func _do_spawn(from_pos):
 		rand_range(BORDERS.position.y, BORDERS.end.y)
 	)
 	var angle = target.angle_to_point(from_pos)
-	angular_velocity = rand_range(-PI, PI) 
+	angular_velocity = rand_range(-PI, PI)
 	linear_velocity = Vector2(cos(angle), sin(angle)) * rand_range(50, 100)
 
 func _physics_process(delta):
