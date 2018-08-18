@@ -1,0 +1,31 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://images/effects/spaceEffects_008.png" type="Texture" id=1]
+[ext_resource path="res://images/effects/spaceEffects_009.png" type="Texture" id=2]
+[ext_resource path="res://images/effects/spaceEffects_010.png" type="Texture" id=3]
+[ext_resource path="res://images/effects/spaceEffects_011.png" type="Texture" id=4]
+[ext_resource path="res://images/effects/spaceEffects_012.png" type="Texture" id=5]
+[ext_resource path="res://images/effects/spaceEffects_013.png" type="Texture" id=6]
+[ext_resource path="res://images/effects/spaceEffects_014.png" type="Texture" id=7]
+[ext_resource path="res://images/effects/spaceEffects_015.png" type="Texture" id=8]
+[ext_resource path="res://images/effects/spaceEffects_016.png" type="Texture" id=9]
+[ext_resource path="res://scripts/Puff.gd" type="Script" id=10]
+
+[sub_resource type="SpriteFrames" id=1]
+
+animations = [ {
+"frames": [ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 1 ) ],
+"loop": false,
+"name": "default",
+"speed": 10.0
+} ]
+_sections_unfolded = [ "Resource" ]
+
+[node name="Puff" type="AnimatedSprite" index="0"]
+
+frames = SubResource( 1 )
+animation = "default"
+frame = 14
+script = ExtResource( 10 )
+
+

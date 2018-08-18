@@ -15,9 +15,11 @@ func try_shoot():
 		return
 	var rot = get_global_transform().get_rotation() - PI / 2
 	var bullet = bullet_type.instance()
-	bullet.position = position
+	bullet.global_rotation = global_rotation
+	bullet.global_position = global_position
 	bullet.linear_velocity = Vector2(cos(rot), sin(rot)) * bullet_speed
 	bullet.angular_velocity = 0
+	get_tree().root.add_child(bullet)
 	add_child(bullet)
 
 func shoot():

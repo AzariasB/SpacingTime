@@ -2,6 +2,7 @@ extends RigidBody2D
 
 var BORDERS
 var small = load("res://scenes/SmallAsteroid.tscn")
+var puff = load("res://scenes/Puff.tscn")
 
 func _ready():
 	# Choose on which side to spawn, and where to go, and how to rotate
@@ -15,6 +16,9 @@ func body_collide(body):
 	if body.name == "EnnemyBody":
 		var  par = body.get_parent().get_parent().get_parent()
 		par.get_parent().remove_child(par)
+		var n_puff = puff.instance()
+		n_puff.global_position = global_position
+		get_tree().root.add_child(n_puff)
 	elif "SimpleBullet" in body.name:
 		body.get_parent().remove_child(body)
 	print(body.name)
