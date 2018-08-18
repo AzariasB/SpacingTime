@@ -22,7 +22,6 @@ func body_collide(body):
 		get_tree().root.add_child(n_puff)
 	elif "SimpleBullet" in body.name:
 		body.get_parent().remove_child(body)
-	print(body.name)
 	explode()
 
 func _destroy_timer():

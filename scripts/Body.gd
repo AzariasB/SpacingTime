@@ -6,32 +6,30 @@ extends RigidBody2D
 export(int) var rotation_speed = 200
 export(int) var move_speed = 2000
 export(float) var invincible_time = 2.0
-export(float)var max_health = 100
-export(float)var max_time_control = 100
+export(float)var max_health = 100.0
+export(float)var max_time_control = 100.0
+export(float) var max_boost = 100.0
 
 var input_rotation = 0
 var speed_multiplier = 1
 var globals
-var health = max_health
 var time_control = max_time_control
 var tween_values = [Color(1,1,1,1), Color(1,0,0,0.5)]
 var flipped = false
 
 onready var cam = $Camera2D
 onready var tween = $Tween
+onready var health = max_health
+onready var boost = max_boost
 
 var invicible_timer = null
 
 func _ready():
 	globals = get_tree().root.get_node("/root/globals")
-	#cam.limit_left = globals.BORDERS.position.x
-	#cam.limit_right = globals.BORDERS.end.x
-	#cam.limit_top = globals.BORDERS.position.y
-	#cam.limit_bottom = globals.BORDERS.end.y
 	set_process(true)
 
 
-func get_input():
+func get_input(dt):
 	if Input.is_action_pressed("ui_left"):
 		input_rotation = -1
 	elif Input.is_action_pressed("ui_right"):
@@ -40,14 +38,22 @@ func get_input():
 		input_rotation = 0
 	
 	var animation = "default"
-	if Input.is_action_pressed("ui_up"):
+	var boost_multiplier = 0.5
+	if Input.is_action_pressed("ui_up") and boost > 0:
 		animation = "accelerate"
 		speed_multiplier = 1.5
-	elif Input.is_action_pressed("ui_down"):
+	elif Input.is_action_pressed("ui_down") and boost > 0:
 		speed_multiplier = 1/1.5
 		animation = "deccelerate"
 	else:
+		boost_multiplier = 0
 		speed_multiplier = 1
+	
+	var old_b = boost
+	boost = boost - (1 * boost_multiplier)
+	
+	if old_b != boost:
+		get_node("../../PlayerHUD/Boost").percentage = boost / max_boost
 	
 	$Sprite/LeftPropeller.play(animation)
 	$Sprite/RightPropeller.play(animation)
@@ -61,7 +67,7 @@ func get_input():
 		
 	
 func _physics_process(delta):
-	get_input()
+	get_input(delta)
 	if input_rotation != 0:
 		angular_velocity = input_rotation * rotation_speed * delta
 	linear_velocity = Vector2(cos(rotation), sin(rotation)) * delta * move_speed * speed_multiplier
@@ -85,17 +91,19 @@ func _physics_process(delta):
 
 
 func hit_by_spaceship():
-		health -= 10
-		# update life display
-		$Area2D/CollisionPolygon2D2.disabled = true
-		invicible_timer = Timer.new()
-		invicible_timer.wait_time = invincible_time
-		invicible_timer.one_shot = true
-		invicible_timer.connect("timeout", self, "end_invincibility")
-		invicible_timer.start()
-		add_child(invicible_timer)
-		_start_tween()
-		tween.connect("tween_completed", self, "_start_tween")
+	print(health, max_health, health / max_health)
+	health -= 10
+	get_node("../../PlayerHUD/Health").percentage = health / max_health
+	# update life display
+	$Area2D/CollisionPolygon2D2.disabled = true
+	invicible_timer = Timer.new()
+	invicible_timer.wait_time = invincible_time
+	invicible_timer.one_shot = true
+	invicible_timer.connect("timeout", self, "end_invincibility")
+	invicible_timer.start()
+	add_child(invicible_timer)
+	_start_tween()
+	tween.connect("tween_completed", self, "_start_tween")
 
 func _start_tween(a= null, b = null):
 	if invicible_timer == null:

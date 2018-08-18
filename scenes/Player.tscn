@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://scripts/Body.gd" type="Script" id=1]
 [ext_resource path="res://images/playerShip1_blue.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://images/fire04.png" type="Texture" id=5]
 [ext_resource path="res://images/fire05.png" type="Texture" id=6]
 [ext_resource path="res://scenes/Weapon.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scripts/PlayerLife.gd" type="Script" id=8]
 
 [sub_resource type="SpriteFrames" id=1]
 
@@ -27,52 +28,52 @@ animations = [ {
 "speed": 10.0
 } ]
 
-[sub_resource type="CapsuleShape2D" id=9]
+[sub_resource type="CapsuleShape2D" id=2]
 
 custom_solver_bias = 0.0
 radius = 10.0
 height = 20.0
 
-[sub_resource type="Gradient" id=2]
+[sub_resource type="Gradient" id=3]
 
 offsets = PoolRealArray( 0, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=3]
+[sub_resource type="GradientTexture" id=4]
 
 flags = 4
-gradient = SubResource( 2 )
+gradient = SubResource( 3 )
 width = 2048
 
-[sub_resource type="Curve" id=4]
+[sub_resource type="Curve" id=5]
 
 min_value = 0.0
 max_value = 1.0
 bake_resolution = 100
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.995434, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=5]
+[sub_resource type="CurveTexture" id=6]
 
 flags = 4
 width = 2048
-curve = SubResource( 4 )
+curve = SubResource( 5 )
 
-[sub_resource type="Gradient" id=6]
+[sub_resource type="Gradient" id=7]
 
 offsets = PoolRealArray( 0, 1 )
 colors = PoolColorArray( 0.933594, 0.0875244, 0.0875244, 1, 0.808594, 0.636452, 0.120026, 0 )
 
-[sub_resource type="GradientTexture" id=7]
+[sub_resource type="GradientTexture" id=8]
 
 flags = 4
-gradient = SubResource( 6 )
+gradient = SubResource( 7 )
 width = 2048
 
-[sub_resource type="ParticlesMaterial" id=8]
+[sub_resource type="ParticlesMaterial" id=9]
 
 render_priority = 0
 trail_divisor = 1
-trail_color_modifier = SubResource( 7 )
+trail_color_modifier = SubResource( 8 )
 emission_shape = 1
 emission_sphere_radius = 10.0
 flag_align_y = false
@@ -99,8 +100,8 @@ angle = 0.0
 angle_random = 0.0
 scale = 5.0
 scale_random = 0.0
-scale_curve = SubResource( 5 )
-color_ramp = SubResource( 3 )
+scale_curve = SubResource( 6 )
+color_ramp = SubResource( 4 )
 hue_variation = 0.0
 hue_variation_random = 0.0
 anim_speed = 0.0
@@ -110,14 +111,15 @@ anim_offset_random = 0.0
 anim_loop = false
 _sections_unfolded = [ "Color", "Hue Variation", "Trail" ]
 
-[node name="Player" type="Node"]
+[node name="Player" type="Node" index="0"]
 
 [node name="Node2D" type="Node2D" parent="." index="0"]
 
 _sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="Body" type="RigidBody2D" parent="Node2D" index="0"]
+[node name="PlayerBody" type="RigidBody2D" parent="Node2D" index="0"]
 
+editor/display_folded = true
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -141,10 +143,11 @@ _sections_unfolded = [ "Applied Forces", "Collision", "Linear", "Transform" ]
 rotation_speed = 200
 move_speed = 8000
 invincible_time = 2.0
-max_health = 100
-max_time_control = 100
+max_health = 100.0
+max_time_control = 100.0
+max_boost = 500.0
 
-[node name="Camera2D" type="Camera2D" parent="Node2D/Body" index="0"]
+[node name="Camera2D" type="Camera2D" parent="Node2D/PlayerBody" index="0"]
 
 visible = false
 position = Vector2( -1.73409, 1.81254 )
@@ -172,7 +175,7 @@ editor_draw_limits = true
 editor_draw_drag_margin = true
 _sections_unfolded = [ "Limit", "Smoothing" ]
 
-[node name="Sprite" type="Sprite" parent="Node2D/Body" index="1"]
+[node name="Sprite" type="Sprite" parent="Node2D/PlayerBody" index="1"]
 
 position = Vector2( -0.387421, 1.16227 )
 rotation = 1.5708
@@ -180,7 +183,7 @@ scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
-[node name="LeftPropeller" type="AnimatedSprite" parent="Node2D/Body/Sprite" index="0"]
+[node name="LeftPropeller" type="AnimatedSprite" parent="Node2D/PlayerBody/Sprite" index="0"]
 
 position = Vector2( -36.7139, 53.0372 )
 frames = SubResource( 1 )
@@ -188,7 +191,7 @@ animation = "default"
 playing = true
 _sections_unfolded = [ "Transform" ]
 
-[node name="RightPropeller" type="AnimatedSprite" parent="Node2D/Body/Sprite" index="1"]
+[node name="RightPropeller" type="AnimatedSprite" parent="Node2D/PlayerBody/Sprite" index="1"]
 
 position = Vector2( 50.612, 55.5694 )
 frames = SubResource( 1 )
@@ -196,25 +199,25 @@ animation = "default"
 playing = true
 _sections_unfolded = [ "Transform" ]
 
-[node name="LeftWeapon" parent="Node2D/Body/Sprite" index="2" instance=ExtResource( 7 )]
+[node name="LeftWeapon" parent="Node2D/PlayerBody/Sprite" index="2" instance=ExtResource( 7 )]
 
 position = Vector2( -46.335, -11.8593 )
 scale = Vector2( 0.24058, 0.24058 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="RightWeapon" parent="Node2D/Body/Sprite" index="3" instance=ExtResource( 7 )]
+[node name="RightWeapon" parent="Node2D/PlayerBody/Sprite" index="3" instance=ExtResource( 7 )]
 
 position = Vector2( 47.7609, -11.8168 )
 scale = Vector2( 0.24058, 0.24058 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Body" index="2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/PlayerBody" index="2"]
 
 visible = false
-shape = SubResource( 9 )
+shape = SubResource( 2 )
 disabled = true
 
-[node name="Area2D" type="Area2D" parent="Node2D/Body" index="3"]
+[node name="Area2D" type="Area2D" parent="Node2D/PlayerBody" index="3"]
 
 input_pickable = false
 gravity_vec = Vector2( 0, 0 )
@@ -226,7 +229,7 @@ audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Collision", "Pickable" ]
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Node2D/Body/Area2D" index="0"]
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Node2D/PlayerBody/Area2D" index="0"]
 
 visible = false
 position = Vector2( -2.3494, 2.23562 )
@@ -234,7 +237,7 @@ scale = Vector2( 1.90151, 2.02486 )
 build_mode = 0
 polygon = PoolVector2Array( 4.62445, 3.29858, 1.17766, 8.37594, 3.34035, 11.6762, -5.85109, 11.1685, -5.1811, 8.67669, -6.45935, 3.17164, -9.50063, 1.77537, -9.56822, -2.34999, -6.86485, -4.19054, -5.58075, -12.2509, 2.86727, -13.1394, 3.27277, -11.2354, 1.448, -9.58524, 4.48928, -4.0636, 11.4505, -2.60386, 11.6532, 1.7119 )
 
-[node name="Tween" type="Tween" parent="Node2D/Body" index="4"]
+[node name="Tween" type="Tween" parent="Node2D/PlayerBody" index="4"]
 
 repeat = false
 playback_process_mode = 1
@@ -243,7 +246,7 @@ playback/active = false
 playback/repeat = false
 playback/speed = 1.0
 
-[node name="LeftEmitter" type="Particles2D" parent="Node2D/Body" index="5"]
+[node name="LeftEmitter" type="Particles2D" parent="Node2D/PlayerBody" index="5"]
 
 position = Vector2( -18.67, -20.8245 )
 scale = Vector2( 0.2, 0.2 )
@@ -260,14 +263,14 @@ fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = false
 draw_order = 0
-process_material = SubResource( 8 )
+process_material = SubResource( 9 )
 texture = null
 normal_map = null
 h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Drawing", "Process Material", "Textures", "Transform" ]
 
-[node name="RightEmitter" type="Particles2D" parent="Node2D/Body" index="6"]
+[node name="RightEmitter" type="Particles2D" parent="Node2D/PlayerBody" index="6"]
 
 position = Vector2( -17.8478, 25.676 )
 scale = Vector2( 0.2, 0.2 )
@@ -284,11 +287,43 @@ fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = false
 draw_order = 0
-process_material = SubResource( 8 )
+process_material = SubResource( 9 )
 texture = null
 normal_map = null
 h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Drawing", "Process Material", "Textures", "Transform" ]
+
+[node name="PlayerHUD" type="CanvasLayer" parent="." index="1"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+
+[node name="Health" type="Node2D" parent="PlayerHUD" index="0"]
+
+position = Vector2( 5, 9 )
+script = ExtResource( 8 )
+_sections_unfolded = [ "Transform" ]
+tweening = true
+width = 400.0
+height = 10.0
+inside_color = Color( 0.0416107, 0.394531, 0.0719398, 1 )
+outline_color = Color( 1, 1, 1, 1 )
+secondary_color = null
+
+[node name="Boost" type="Node2D" parent="PlayerHUD" index="1"]
+
+position = Vector2( 300, 9 )
+script = ExtResource( 8 )
+_sections_unfolded = [ "Transform" ]
+tweening = false
+width = 400.0
+height = 10.0
+inside_color = Color( 0.110901, 0.379866, 0.617188, 1 )
+outline_color = Color( 1, 1, 1, 1 )
+secondary_color = null
 
 
