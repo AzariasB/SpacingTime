@@ -15,6 +15,9 @@ func body_collide(body):
 	if body.name == "EnnemyBody":
 		var  par = body.get_parent().get_parent().get_parent()
 		par.get_parent().remove_child(par)
+	elif "SimpleBullet" in body.name:
+		body.get_parent().remove_child(body)
+	print(body.name)
 	explode()
 
 func spawn_inside(borders):

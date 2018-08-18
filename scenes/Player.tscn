@@ -245,7 +245,7 @@ playback/speed = 1.0
 
 [node name="LeftEmitter" type="Particles2D" parent="Node2D/Body" index="5"]
 
-position = Vector2( -19.9458, -16.7651 )
+position = Vector2( -18.67, -20.8245 )
 scale = Vector2( 0.2, 0.2 )
 emitting = true
 amount = 50
@@ -269,7 +269,7 @@ _sections_unfolded = [ "Drawing", "Process Material", "Textures", "Transform" ]
 
 [node name="RightEmitter" type="Particles2D" parent="Node2D/Body" index="6"]
 
-position = Vector2( -20.2145, 24.0982 )
+position = Vector2( -17.8478, 25.676 )
 scale = Vector2( 0.2, 0.2 )
 emitting = true
 amount = 50
