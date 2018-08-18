@@ -17,8 +17,11 @@ var time_control = max_time_control
 var tween_values = [Color(1,1,1,1), Color(1,0,0,0.5)]
 var flipped = false
 
+var debris = load("res://scenes/Debris.tscn")
+
 onready var cam = $Camera2D
 onready var tween = $Tween
+onready var dead_particles = get_node("../DeadExplosion")
 onready var health = max_health
 onready var boost = max_boost
 
@@ -27,6 +30,15 @@ var invicible_timer = null
 func _ready():
 	globals = get_tree().root.get_node("/root/globals")
 	set_process(true)
+	get_node("../../PlayerHUD/EndScreen/RestartButton").connect("pressed", get_tree(), "reload_current_scene")
+
+
+func _lost():
+	get_node("../../PlayerHUD/EndScreen").visible = true
+	dead_particles.visible = true
+	dead_particles.global_position = get_global_transform_with_canvas().origin
+	dead_particles.emitting = true
+	get_parent().remove_child(self)
 
 
 func get_input(dt):
@@ -87,14 +99,17 @@ func _physics_process(delta):
 	
 	var bodies = $Area2D.get_overlapping_bodies()
 	if bodies.size() > 0:
-		hit_by_spaceship()
+		_process_hit(bodies[0])
 
 
-func hit_by_spaceship():
-	print(health, max_health, health / max_health)
-	health -= 10
+func _process_hit(body):
+	health -= max_health
 	get_node("../../PlayerHUD/Health").percentage = health / max_health
-	# update life display
+	
+	if health <= 0:
+		_lost()
+		return
+	
 	$Area2D/CollisionPolygon2D2.disabled = true
 	invicible_timer = Timer.new()
 	invicible_timer.wait_time = invincible_time

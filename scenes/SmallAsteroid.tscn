@@ -8,7 +8,7 @@
 custom_solver_bias = 0.0
 radius = 10.0
 
-[node name="SmallAsteroid" type="Node2D"]
+[node name="SmallAsteroid" type="Node2D" index="0"]
 
 _sections_unfolded = [ "Transform" ]
 
@@ -16,7 +16,7 @@ _sections_unfolded = [ "Transform" ]
 
 input_pickable = false
 collision_layer = 2
-collision_mask = 7
+collision_mask = 5
 mode = 0
 mass = 1.0
 friction = 1.0

@@ -29,6 +29,7 @@ shader = SubResource( 1 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." index="0"]
 
+editor/display_folded = true
 layer = -1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -96,8 +97,8 @@ wait_time = 1.5
 one_shot = false
 autostart = true
 
-[node name="Ennemies" type="Node" parent="Spawner" index="2"]
+[node name="Ennemies" type="Node2D" parent="Spawner" index="2"]
 
-[node name="Asteroids" type="Node" parent="Spawner" index="3"]
+[node name="Asteroids" type="Node2D" parent="Spawner" index="3"]
 
 

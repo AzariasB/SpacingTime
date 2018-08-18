@@ -43,7 +43,7 @@ func _do_spawn(from_pos):
 		rand_range(BORDERS.position.y, BORDERS.end.y)
 	)
 	var angle = target.angle_to_point(from_pos)
-	angular_velocity = rand_range(0, 2 * PI) + 0.1
+	angular_velocity = rand_range(-PI, PI) 
 	linear_velocity = Vector2(cos(angle), sin(angle)) * rand_range(50, 100)
 
 func _physics_process(delta):

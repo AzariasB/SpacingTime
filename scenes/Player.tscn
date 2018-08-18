@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://scripts/Body.gd" type="Script" id=1]
 [ext_resource path="res://images/playerShip1_blue.png" type="Texture" id=2]
@@ -7,7 +7,10 @@
 [ext_resource path="res://images/fire04.png" type="Texture" id=5]
 [ext_resource path="res://images/fire05.png" type="Texture" id=6]
 [ext_resource path="res://scenes/Weapon.tscn" type="PackedScene" id=7]
-[ext_resource path="res://scripts/PlayerLife.gd" type="Script" id=8]
+[ext_resource path="res://images/effects/star2.png" type="Texture" id=8]
+[ext_resource path="res://scripts/PlayerLife.gd" type="Script" id=9]
+[ext_resource path="res://font/Kenney Rocket.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://images/ui/buttonBlue.png" type="Texture" id=11]
 
 [sub_resource type="SpriteFrames" id=1]
 
@@ -111,6 +114,94 @@ anim_offset_random = 0.0
 anim_loop = false
 _sections_unfolded = [ "Color", "Hue Variation", "Trail" ]
 
+[sub_resource type="Gradient" id=14]
+
+offsets = PoolRealArray( 0, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=15]
+
+flags = 4
+gradient = SubResource( 14 )
+width = 2048
+
+[sub_resource type="Curve" id=16]
+
+min_value = 0.0
+max_value = 1.0
+bake_resolution = 100
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.467657 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=17]
+
+flags = 4
+width = 2048
+curve = SubResource( 16 )
+
+[sub_resource type="ParticlesMaterial" id=13]
+
+render_priority = 0
+trail_divisor = 1
+emission_shape = 1
+emission_sphere_radius = 10.0
+flag_align_y = false
+flag_rotate_y = false
+flag_disable_z = true
+spread = 180.0
+flatness = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 150.0
+initial_velocity_random = 0.5
+angular_velocity = 50.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 0.0
+linear_accel_random = 0.0
+radial_accel = 0.0
+radial_accel_random = 0.0
+tangential_accel = 0.0
+tangential_accel_random = 0.0
+damping = 0.0
+damping_random = 0.0
+angle = 0.0
+angle_random = 0.0
+scale = 2.0
+scale_random = 0.0
+scale_curve = SubResource( 17 )
+color_ramp = SubResource( 15 )
+hue_variation = 0.0
+hue_variation_random = 0.0
+anim_speed = 0.0
+anim_speed_random = 0.0
+anim_offset = 0.0
+anim_offset_random = 0.0
+anim_loop = false
+_sections_unfolded = [ "Initial Velocity", "Scale" ]
+
+[sub_resource type="StyleBoxEmpty" id=10]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+
+[sub_resource type="DynamicFont" id=11]
+
+size = 30
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 10 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=12]
+
+size = 20
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 10 )
+_sections_unfolded = [ "Settings" ]
+
 [node name="Player" type="Node" index="0"]
 
 [node name="Node2D" type="Node2D" parent="." index="0"]
@@ -119,7 +210,6 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="PlayerBody" type="RigidBody2D" parent="Node2D" index="0"]
 
-editor/display_folded = true
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -139,7 +229,7 @@ linear_damp = -1.0
 angular_velocity = 0.0
 angular_damp = 5.0
 script = ExtResource( 1 )
-_sections_unfolded = [ "Applied Forces", "Collision", "Linear", "Transform" ]
+_sections_unfolded = [ "Applied Forces", "Linear", "Transform" ]
 rotation_speed = 200
 move_speed = 8000
 invincible_time = 2.0
@@ -294,8 +384,33 @@ h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Drawing", "Process Material", "Textures", "Transform" ]
 
+[node name="DeadExplosion" type="Particles2D" parent="Node2D" index="1"]
+
+visible = false
+position = Vector2( 253.43, 91.8615 )
+emitting = false
+amount = 20
+lifetime = 3.0
+one_shot = true
+preprocess = 0.0
+speed_scale = 1.0
+explosiveness = 1.0
+randomness = 0.0
+fixed_fps = 0
+fract_delta = true
+visibility_rect = Rect2( -100, -100, 200, 200 )
+local_coords = true
+draw_order = 0
+process_material = SubResource( 13 )
+texture = ExtResource( 8 )
+normal_map = null
+h_frames = 1
+v_frames = 1
+_sections_unfolded = [ "Process Material", "Textures", "Time" ]
+
 [node name="PlayerHUD" type="CanvasLayer" parent="." index="1"]
 
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -305,7 +420,7 @@ transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 [node name="Health" type="Node2D" parent="PlayerHUD" index="0"]
 
 position = Vector2( 5, 9 )
-script = ExtResource( 8 )
+script = ExtResource( 9 )
 _sections_unfolded = [ "Transform" ]
 tweening = true
 width = 400.0
@@ -317,7 +432,7 @@ secondary_color = null
 [node name="Boost" type="Node2D" parent="PlayerHUD" index="1"]
 
 position = Vector2( 300, 9 )
-script = ExtResource( 8 )
+script = ExtResource( 9 )
 _sections_unfolded = [ "Transform" ]
 tweening = false
 width = 400.0
@@ -325,5 +440,83 @@ height = 10.0
 inside_color = Color( 0.110901, 0.379866, 0.617188, 1 )
 outline_color = Color( 1, 1, 1, 1 )
 secondary_color = null
+
+[node name="EndScreen" type="Node2D" parent="PlayerHUD" index="2"]
+
+visible = false
+
+[node name="Label" type="Label" parent="PlayerHUD/EndScreen" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 400.0
+margin_top = 275.0
+margin_right = 628.0
+margin_bottom = 318.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_styles/normal = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
+text = "You lost"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Visibility" ]
+
+[node name="RestartButton" type="TextureButton" parent="PlayerHUD/EndScreen" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 398.0
+margin_top = 357.0
+margin_right = 620.0
+margin_bottom = 397.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 11 )
+texture_pressed = ExtResource( 11 )
+texture_hover = ExtResource( 11 )
+
+[node name="Label" type="Label" parent="PlayerHUD/EndScreen/RestartButton" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 8.0
+margin_right = 218.0
+margin_bottom = 38.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 12 )
+custom_colors/font_color = Color( 0.13176, 0.613281, 0.161855, 1 )
+text = "Restart"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
 
