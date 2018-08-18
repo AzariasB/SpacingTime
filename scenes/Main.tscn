@@ -78,15 +78,26 @@ _sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
 
 [node name="Player" parent="." index="1" instance=ExtResource( 3 )]
 
-[node name="EnnemySpawner" type="Node" parent="." index="2"]
+[node name="Spawner" type="Node" parent="." index="2"]
 
 script = ExtResource( 4 )
 
-[node name="Timer" type="Timer" parent="EnnemySpawner" index="0"]
+[node name="UfoTimer" type="Timer" parent="Spawner" index="0"]
 
 process_mode = 1
 wait_time = 1.0
 one_shot = false
 autostart = true
+
+[node name="AsteroidTimer" type="Timer" parent="Spawner" index="1"]
+
+process_mode = 1
+wait_time = 2.0
+one_shot = false
+autostart = true
+
+[node name="Ennemies" type="Node" parent="Spawner" index="2"]
+
+[node name="Asteroids" type="Node" parent="Spawner" index="3"]
 
 

@@ -110,7 +110,7 @@ anim_offset_random = 0.0
 anim_loop = false
 _sections_unfolded = [ "Color", "Hue Variation", "Trail" ]
 
-[node name="Player" type="Node" index="0"]
+[node name="Player" type="Node"]
 
 [node name="Node2D" type="Node2D" parent="." index="0"]
 
@@ -142,6 +142,7 @@ rotation_speed = 200
 move_speed = 8000
 invincible_time = 2.0
 max_health = 100
+max_time_control = 100
 
 [node name="Camera2D" type="Camera2D" parent="Node2D/Body" index="0"]
 

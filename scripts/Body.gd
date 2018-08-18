@@ -7,11 +7,13 @@ export(int) var rotation_speed = 200
 export(int) var move_speed = 2000
 export(float) var invincible_time = 2.0
 export(float)var max_health = 100
+export(float)var max_time_control = 100
 
 var input_rotation = 0
 var speed_multiplier = 1
 var globals
 var health = max_health
+var time_control = max_time_control
 var tween_values = [Color(1,1,1,1), Color(1,0,0,0.5)]
 var flipped = false
 

@@ -43,6 +43,10 @@ func create_path():
 	$Path2D.curve.add_point(ending_pos)	
 
 func _physics_process(delta):
-	f_path.unit_offset += (delta / 10)
+	if Input.is_action_pressed("time_travel"):
+		var u_of = f_path.unit_offset - (delta / 10)
+		f_path.unit_offset = max(0, u_of)
+	else:
+		f_path.unit_offset += (delta / 10)
 	if f_path.unit_offset >= 1.0:
 		get_parent().remove_child(self)

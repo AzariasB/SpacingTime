@@ -29,21 +29,21 @@ loop = false
 lookahead = 0.001
 _sections_unfolded = [ "Transform" ]
 
-[node name="KinematicBody2D" type="KinematicBody2D" parent="Path2D/PathFollow2D" index="0"]
+[node name="EnnemyBody" type="KinematicBody2D" parent="Path2D/PathFollow2D" index="0"]
 
 input_pickable = false
-collision_layer = 0
-collision_mask = 1
+collision_layer = 4
+collision_mask = 3
 collision/safe_margin = 0.08
 _sections_unfolded = [ "Collision", "Transform", "collision" ]
 
-[node name="Sprite" type="Sprite" parent="Path2D/PathFollow2D/KinematicBody2D" index="0"]
+[node name="Sprite" type="Sprite" parent="Path2D/PathFollow2D/EnnemyBody" index="0"]
 
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/KinematicBody2D" index="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/EnnemyBody" index="1"]
 
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
