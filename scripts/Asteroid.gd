@@ -4,8 +4,10 @@ var BORDERS
 var global
 var small = load("res://scenes/SmallAsteroid.tscn")
 var puff = load("res://scenes/Puff.tscn")
+var point = load("res://scenes/GainPoint.tscn")
 onready var timer = null
-
+onready var particles = get_node("../../GainPoint")
+onready var sound = get_tree().root.get_node("/root/Sounds")
 
 func _ready():
 	# Choose on which side to spawn, and where to go, and how to rotate
@@ -21,11 +23,14 @@ func _ready():
 func body_collide(body):
 	if body.name == "EnnemyBody":
 		var  par = body.get_parent().get_parent().get_parent()
-		print(par.name)
 		par.get_parent().remove_child(par)
 		var n_puff = puff.instance()
 		n_puff.global_position = global_position
 		global.increment_score()
+		sound.get_node("Point").play()
+		var p = point.instance()
+		p.global_position = global_position
+		get_tree().root.add_child(p)
 		get_tree().root.add_child(n_puff)
 	elif "SimpleBullet" in body.name:
 		body.get_parent().remove_child(body)
@@ -50,6 +55,7 @@ func _physics_process(delta):
 
 
 func explode():
+	var asteroids = get_parent().get_parent()
 	if name == "AsteroidBody":
 		var a2 = small.instance()
 		a2.global_position = global_position
@@ -57,5 +63,5 @@ func explode():
 		var angle = rand_range(0, 2 * PI)
 		a2Body.linear_velocity = Vector2(cos(angle),sin(angle)) * 20
 		a2Body.angular_velocity = rand_range(0 , 2 * PI)
-		get_parent().add_child(a2)
-	get_parent().remove_child(self)
+		asteroids.add_child(a2)
+	asteroids.remove_child(get_parent())
