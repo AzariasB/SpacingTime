@@ -1,0 +1,650 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://scripts/ParallaxBackground.gd" type="Script" id=1]
+[ext_resource path="res://images/backgrounds/blue.png" type="Texture" id=2]
+[ext_resource path="res://images/backgrounds/stars.png" type="Texture" id=3]
+[ext_resource path="res://scripts/Help.gd" type="Script" id=4]
+[ext_resource path="res://font/Kenney Rocket.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://images/ennemies/ufoRed.png" type="Texture" id=6]
+[ext_resource path="res://scripts/Rotating.gd" type="Script" id=7]
+[ext_resource path="res://images/ui/square.svg" type="Texture" id=8]
+[ext_resource path="res://images/ui/arrows.png" type="Texture" id=9]
+[ext_resource path="res://images/ui/space.png" type="Texture" id=10]
+[ext_resource path="res://images/ui/backspace.png" type="Texture" id=11]
+[ext_resource path="res://images/ui/green_button00.png" type="Texture" id=12]
+[ext_resource path="res://images/ui/green_button03.png" type="Texture" id=13]
+[ext_resource path="res://images/ui/green_button02.png" type="Texture" id=14]
+[ext_resource path="res://images/ui/green_button01.png" type="Texture" id=15]
+[ext_resource path="res://images/ui/help.png" type="Texture" id=16]
+
+[sub_resource type="Shader" id=1]
+
+code = "shader_type canvas_item;
+
+uniform sampler2D bg_texture;
+
+void vertex(){
+	VERTEX.x = sin(TIME);
+}
+
+void fragment(){
+	COLOR = texture(bg_texture, SCREEN_UV);
+}"
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="ShaderMaterial" id=2]
+
+render_priority = 0
+shader = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+
+size = 30
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 5 )
+_sections_unfolded = [ "Settings" ]
+
+[sub_resource type="DynamicFont" id=5]
+
+size = 25
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 5 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=4]
+
+size = 20
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 5 )
+_sections_unfolded = [ "Settings" ]
+
+[node name="Help" type="Node" index="0"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." index="0"]
+
+editor/display_folded = true
+layer = -1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+scroll_offset = Vector2( 0, 0 )
+scroll_base_offset = Vector2( 0, 0 )
+scroll_base_scale = Vector2( 1, 1 )
+scroll_limit_begin = Vector2( 0, 0 )
+scroll_limit_end = Vector2( 0, 0 )
+scroll_ignore_camera_zoom = true
+script = ExtResource( 1 )
+_sections_unfolded = [ "Scroll" ]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" index="0"]
+
+material = SubResource( 2 )
+z_index = -2
+motion_scale = Vector2( 0.1, 0.1 )
+motion_offset = Vector2( 0, 0 )
+motion_mirroring = Vector2( 256, 256 )
+_sections_unfolded = [ "Material", "Motion", "Visibility", "Z Index" ]
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer" index="0"]
+
+position = Vector2( 420, 260 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 1200, 1200 )
+_sections_unfolded = [ "Animation", "Offset", "Region" ]
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground" index="1"]
+
+z_index = -1
+motion_scale = Vector2( 0.5, 0.5 )
+motion_offset = Vector2( 0, 0 )
+motion_mirroring = Vector2( 256, 256 )
+_sections_unfolded = [ "Material", "Motion", "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer2" index="0"]
+
+position = Vector2( 519.167, 303.511 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 2400, 2400 )
+_sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="1"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+script = ExtResource( 4 )
+
+[node name="Title" type="Label" parent="CanvasLayer" index="0"]
+
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 0.0
+margin_left = -60.0
+margin_right = 60.0
+margin_bottom = 38.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "Help"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="Screen1" type="Node2D" parent="CanvasLayer" index="1"]
+
+[node name="ufoRed" type="Sprite" parent="CanvasLayer/Screen1" index="0"]
+
+position = Vector2( 490, 120 )
+scale = Vector2( 0.463108, 0.463108 )
+texture = ExtResource( 6 )
+script = ExtResource( 7 )
+
+[node name="square" type="Sprite" parent="CanvasLayer/Screen1" index="1"]
+
+position = Vector2( 510, 440 )
+scale = Vector2( 10.2, 2.9 )
+texture = ExtResource( 8 )
+
+[node name="arrows" type="Sprite" parent="CanvasLayer/Screen1" index="2"]
+
+position = Vector2( 810, 440 )
+texture = ExtResource( 9 )
+
+[node name="space" type="Sprite" parent="CanvasLayer/Screen1" index="3"]
+
+position = Vector2( 220, 450 )
+scale = Vector2( 0.55, 0.55 )
+texture = ExtResource( 10 )
+
+[node name="backspace" type="Sprite" parent="CanvasLayer/Screen1" index="4"]
+
+position = Vector2( 550, 400 )
+scale = Vector2( 0.55, 0.55 )
+texture = ExtResource( 11 )
+
+[node name="ArrowsLabel" type="Label" parent="CanvasLayer/Screen1" index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 650.0
+margin_top = 520.0
+margin_right = 990.0
+margin_bottom = 558.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "Control ship"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="BackspaceLabel" type="Label" parent="CanvasLayer/Screen1" index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 390.0
+margin_top = 320.0
+margin_right = 730.0
+margin_bottom = 358.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "Control time"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="SpaceLabel" type="Label" parent="CanvasLayer/Screen1" index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 150.0
+margin_top = 500.0
+margin_right = 310.0
+margin_bottom = 538.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "Shoot"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Screen1" index="8"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 10.0
+margin_top = 100.0
+margin_right = 864.0
+margin_bottom = 279.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_constants/separation = 9
+alignment = 1
+_sections_unfolded = [ "custom_constants" ]
+
+[node name="GoalLabel" type="Label" parent="CanvasLayer/Screen1/VBoxContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 940.0
+margin_bottom = 38.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "Destroy the UFOS"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="TimeLabel" type="Label" parent="CanvasLayer/Screen1/VBoxContainer" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 47.0
+margin_right = 940.0
+margin_bottom = 85.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "Control the time with backspace"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="Warning" type="Label" parent="CanvasLayer/Screen1/VBoxContainer" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 94.0
+margin_right = 940.0
+margin_bottom = 132.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "Don't get hit by Asteroids or UFOS"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="Tips" type="Label" parent="CanvasLayer/Screen1/VBoxContainer" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 141.0
+margin_right = 940.0
+margin_bottom = 179.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "Collect health and boost to survive"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="NextButton" type="TextureButton" parent="CanvasLayer/Screen1" index="9"]
+
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_left = 770.0
+margin_right = 960.0
+margin_bottom = 49.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 12 )
+texture_pressed = ExtResource( 13 )
+texture_hover = ExtResource( 14 )
+texture_focused = ExtResource( 15 )
+stretch_mode = 6
+_sections_unfolded = [ "Anchor", "Grow Direction", "Size Flags", "Textures" ]
+
+[node name="Label" type="Label" parent="CanvasLayer/Screen1/NextButton" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 190.0
+margin_bottom = 43.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 5 )
+text = "Next"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Anchor", "Rect", "custom_fonts" ]
+
+[node name="Screen2" type="Node2D" parent="CanvasLayer" index="2"]
+
+editor/display_folded = true
+visible = false
+
+[node name="square" type="Sprite" parent="CanvasLayer/Screen2" index="0"]
+
+position = Vector2( 520, 300 )
+scale = Vector2( 8.01031, 4.625 )
+texture = ExtResource( 8 )
+
+[node name="help" type="Sprite" parent="CanvasLayer/Screen2/square" index="0"]
+
+position = Vector2( -2.08616e-06, -6.19888e-06 )
+scale = Vector2( 0.0877775, 0.144144 )
+texture = ExtResource( 16 )
+
+[node name="PowerupLabel" type="Label" parent="CanvasLayer/Screen2" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 680.0
+margin_top = 400.0
+margin_right = 821.0
+margin_bottom = 425.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.431373, 0.486275, 0.635294, 1 )
+text = "Powerup"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_colors", "custom_fonts" ]
+
+[node name="HealthLabel" type="Label" parent="CanvasLayer/Screen2" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 220.0
+margin_top = 120.0
+margin_right = 361.0
+margin_bottom = 145.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.43277, 0.488537, 0.636719, 1 )
+text = "Health"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_colors" ]
+
+[node name="BoostLabel" type="Label" parent="CanvasLayer/Screen2" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 660.0
+margin_top = 120.0
+margin_right = 770.0
+margin_bottom = 145.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.431373, 0.486275, 0.635294, 1 )
+text = "Boost"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_colors", "custom_fonts" ]
+
+[node name="TimeControlLabel" type="Label" parent="CanvasLayer/Screen2" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 170.0
+margin_top = 460.0
+margin_right = 393.0
+margin_bottom = 485.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.431373, 0.486275, 0.635294, 1 )
+text = "Time Control"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_colors", "custom_fonts" ]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/Screen2" index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 470.0
+margin_top = 130.0
+margin_right = 580.0
+margin_bottom = 155.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.431373, 0.486275, 0.635294, 1 )
+text = "Score"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_colors", "custom_fonts" ]
+
+[node name="PreviousButton" type="TextureButton" parent="CanvasLayer/Screen2" index="6"]
+
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_left = 766.0
+margin_right = 956.0
+margin_bottom = 49.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 12 )
+texture_pressed = ExtResource( 13 )
+texture_hover = ExtResource( 14 )
+texture_focused = ExtResource( 15 )
+stretch_mode = 6
+_sections_unfolded = [ "Anchor", "Grow Direction", "Size Flags", "Textures" ]
+
+[node name="Label" type="Label" parent="CanvasLayer/Screen2/PreviousButton" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 190.0
+margin_bottom = 43.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 5 )
+text = "Prev."
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Anchor", "Rect", "custom_fonts" ]
+
+[node name="MenuButton" type="TextureButton" parent="CanvasLayer" index="3"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 190.0
+margin_bottom = 49.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 12 )
+texture_pressed = ExtResource( 13 )
+texture_hover = ExtResource( 14 )
+texture_focused = ExtResource( 15 )
+stretch_mode = 6
+_sections_unfolded = [ "Anchor", "Grow Direction", "Size Flags", "Textures" ]
+
+[node name="Label" type="Label" parent="CanvasLayer/MenuButton" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 190.0
+margin_bottom = 43.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 5 )
+text = "Menu"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Anchor", "Rect", "custom_fonts" ]
+
+

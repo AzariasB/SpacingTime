@@ -9,4 +9,3 @@ func _ready():
 	
 func _process(delta):
 	$ParallaxLayer2.motion_offset.x += delta * 50
-

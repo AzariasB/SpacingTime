@@ -11,7 +11,7 @@ config_version=3
 [application]
 
 config/name="SpaceTimeTraveler"
-run/main_scene="res://scenes/Main.tscn"
+run/main_scene="res://scenes/Menu.tscn"
 config/icon="res://images/playerShip1_blue.png"
 
 [autoload]

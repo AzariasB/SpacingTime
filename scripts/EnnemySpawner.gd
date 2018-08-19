@@ -14,7 +14,7 @@ func _ready():
 	$UfoTimer.connect("timeout", self, "spawn_ennemy")
 	if get_node("AsteroidTimer") != null:
 		$AsteroidTimer.connect("timeout", self, "spawn_asteroid")
-	if get_node("Powerupstimer") != null:
+	if get_node("PowerupsTimer") != null:
 		$PowerupsTimer.connect("timeout", self, "spawn_powerup")
 
 func spawn_ennemy():
