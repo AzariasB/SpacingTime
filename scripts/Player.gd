@@ -11,7 +11,7 @@ func _ready():
 func _process(delta):
 	var old_tc = timecontrol
 
-	if Input.is_action_pressed("time_travel"):
+	if Input.is_action_pressed("time_travel") and not globals.player_lost:
 		timecontrol = max(0, timecontrol - delta * 20)
 		$TimeCooldown.stop()
 		$TimeCooldown.start()

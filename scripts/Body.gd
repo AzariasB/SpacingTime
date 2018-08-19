@@ -34,12 +34,18 @@ func _ready():
 
 
 func _lost():
+	globals.player_lost = true
 	get_node("../../PlayerHUD/EndScreen").visible = true
 	dead_particles.visible = true
 	dead_particles.global_position = get_global_transform_with_canvas().origin
 	dead_particles.emitting = true
 	get_parent().remove_child(self)
 
+func _add_boost(add_b):
+	if add_b == 0: return boost <= 0
+	boost = clamp(boost + add_b, 0, max_boost)
+	get_node("../../PlayerHUD/Boost").percentage = boost / max_boost
+	return boost <= 0
 
 func get_input(dt):
 	if Input.is_action_pressed("ui_left"):
@@ -60,13 +66,7 @@ func get_input(dt):
 	else:
 		boost_multiplier = 0
 		speed_multiplier = 1
-	
-	var old_b = boost
-	boost = boost - (1 * boost_multiplier)
-	
-	if old_b != boost:
-		get_node("../../PlayerHUD/Boost").percentage = boost / max_boost
-	
+	_add_boost(-1 * boost_multiplier)
 	$Sprite/LeftPropeller.play(animation)
 	$Sprite/RightPropeller.play(animation)
 	
@@ -99,22 +99,29 @@ func _physics_process(delta):
 	
 	var bodies = $Area2D.get_overlapping_bodies()
 	if bodies.size() > 0:
+		print(bodies.size())
 		_process_hit(bodies[0])
 
-
-func _process_hit(body):
-	print(body.name)
-	
-	if body.name == "AsteroidBody":
-		health -= 10
-	elif body.name == "EnnemyBody":
-		health -= 20
-	elif body.name == "SmallAsteroidBody":
-		health -= 5
+func _add_health(add):
+	if add == 0: return health <= 0
+	health = clamp(health + add, 0, max_health)
 	get_node("../../PlayerHUD/Health").percentage = health / max_health
 	
 	if health <= 0:
 		_lost()
+		return false
+		
+	return true
+
+func _process_hit(body):
+	if body.name == "AsteroidBody" and not _add_health(-10):
+		return
+	elif body.name == "EnnemyBody" and not _add_health(-20):
+		return
+	elif body.name == "SmallAsteroidBody" and not _add_health(-5):
+		return
+	elif body.name == "PowerupBody":
+		_collect_powerup(body)
 		return
 	
 	$Area2D/CollisionPolygon2D2.disabled = true
@@ -126,6 +133,16 @@ func _process_hit(body):
 	add_child(invicible_timer)
 	_start_tween()
 	tween.connect("tween_completed", self, "_start_tween")
+
+func _collect_powerup(body):
+	var powerup = body.get_parent()
+	var b_type = powerup.type
+	if b_type == powerup.POW_HEALTH:
+		_add_health(powerup.value)
+	elif b_type == powerup.POW_BOOST:
+		_add_boost(powerup.value)
+	powerup.get_parent().remove_child(powerup)
+	
 
 func _start_tween(a= null, b = null):
 	if invicible_timer == null:
@@ -143,8 +160,3 @@ func end_invincibility():
 		$Area2D/CollisionPolygon2D2.disabled = false
 		remove_child(invicible_timer)
 	invicible_timer = null
-	
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass

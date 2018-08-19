@@ -212,14 +212,13 @@ use_filter = false
 font_data = ExtResource( 11 )
 _sections_unfolded = [ "Settings" ]
 
-[node name="Player" type="Node" index="0"]
+[node name="Player" type="Node"]
 
 script = ExtResource( 1 )
 max_timecontrol = 100.0
 
 [node name="Node2D" type="Node2D" parent="." index="0"]
 
-editor/display_folded = true
 _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="PlayerBody" type="RigidBody2D" parent="Node2D" index="0"]
@@ -337,9 +336,9 @@ _sections_unfolded = [ "Collision", "Pickable" ]
 
 visible = false
 position = Vector2( -2.3494, 2.23562 )
-scale = Vector2( 1.90151, 2.02486 )
 build_mode = 0
-polygon = PoolVector2Array( 4.62445, 3.29858, 1.17766, 8.37594, 3.34035, 11.6762, -5.85109, 11.1685, -5.1811, 8.67669, -6.45935, 3.17164, -9.50063, 1.77537, -9.56822, -2.34999, -6.86485, -4.19054, -5.58075, -12.2509, 2.86727, -13.1394, 3.27277, -11.2354, 1.448, -9.58524, 4.48928, -4.0636, 11.4505, -2.60386, 11.6532, 1.7119 )
+polygon = PoolVector2Array( 9.68422, 6.59301, 3.42116, 16.7995, 13.0477, 24.6863, -11.3086, 23.4105, -10.2648, 19.931, -12.9324, 7.05694, -17.9196, 4.27336, -18.1516, -5.23721, -12.2365, -8.71668, -10.9607, -24.8382, 10.6121, -27.3899, 11.424, -22.0547, 2.84125, -19.851, 9.33627, -7.55685, 21.2825, -5.35319, 21.3984, 3.46148 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="Tween" type="Tween" parent="Node2D/PlayerBody" index="4"]
 

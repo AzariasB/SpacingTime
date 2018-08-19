@@ -12,13 +12,14 @@ func _ready():
 	BORDERS = get_tree().root.get_node("/root/globals").BORDERS
 	global = get_tree().root.get_node("/root/globals")
 	if name != "SmallAsteroidBody":
-		spawn_inside(BORDERS)
+		spawn()
 	set_process(true)
 	self.connect("body_entered", self, "body_collide")
 
 func body_collide(body):
 	if body.name == "EnnemyBody":
 		var  par = body.get_parent().get_parent().get_parent()
+		print(par.name)
 		par.get_parent().remove_child(par)
 		var n_puff = puff.instance()
 		n_puff.global_position = global_position
@@ -32,23 +33,14 @@ func _destroy_timer():
 	remove_child(timer)
 	timer = null
 
-func spawn_inside(borders):
-	var spwn_side = randi() % 4
-	match(spwn_side):
-		0: _do_spawn(Vector2(BORDERS.position.x, rand_range(BORDERS.position.y, BORDERS.end.y)))
-		1: _do_spawn(Vector2(rand_range(BORDERS.position.x, BORDERS.end.x ), BORDERS.position.y ))
-		2: _do_spawn(Vector2(BORDERS.end.x, rand_range(BORDERS.position.y, BORDERS.end.y) ) )
-		_: _do_spawn(Vector2(rand_range(BORDERS.position.x, BORDERS.end.x), BORDERS.end.y))
-
-func _do_spawn(from_pos):
-	global_position = from_pos
-	var target = Vector2(
-		rand_range(BORDERS.position.x, BORDERS.end.x),
-		rand_range(BORDERS.position.y, BORDERS.end.y)
-	)
-	var angle = target.angle_to_point(from_pos)
+func spawn():
+	var from = globals.pos_outside()
+	var to = globals.pos_outside()
+	global_position = from
+	var angle = to.angle_to_point(from)
 	angular_velocity = rand_range(-PI, PI)
 	linear_velocity = Vector2(cos(angle), sin(angle)) * rand_range(50, 100)
+
 
 func _physics_process(delta):
 	if timer == null and not BORDERS.has_point(global_position):

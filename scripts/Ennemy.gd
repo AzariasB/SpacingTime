@@ -45,7 +45,7 @@ func create_path():
 	$Path2D.curve.add_point(ending_pos)	
 
 func _physics_process(delta):
-	if Input.is_action_pressed("time_travel") and globals.remaining_timecontrol > 0:
+	if Input.is_action_pressed("time_travel") and globals.remaining_timecontrol > 0 and not globals.player_lost:
 		var u_of = f_path.unit_offset - (delta / 10)
 		f_path.unit_offset = max(0, u_of)
 	else:
