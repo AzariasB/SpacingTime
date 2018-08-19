@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://sounds/start_2.wav" type="AudioStream" id=1]
 [ext_resource path="res://sounds/powerUp2.ogg" type="AudioStream" id=2]
 [ext_resource path="res://sounds/laser1.ogg" type="AudioStream" id=3]
 [ext_resource path="res://sounds/zap1.ogg" type="AudioStream" id=4]
+[ext_resource path="res://sounds/engine.wav" type="AudioStream" id=5]
+[ext_resource path="res://sounds/pepSound2.ogg" type="AudioStream" id=6]
+[ext_resource path="res://sounds/pepSound1.ogg" type="AudioStream" id=7]
+[ext_resource path="res://sounds/phaserDown3.ogg" type="AudioStream" id=8]
 
 [node name="Sounds" type="Node"]
 
@@ -37,6 +41,42 @@ bus = "Master"
 [node name="Point" type="AudioStreamPlayer" parent="." index="3"]
 
 stream = ExtResource( 4 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+
+[node name="Engine" type="AudioStreamPlayer" parent="." index="4"]
+
+stream = ExtResource( 5 )
+volume_db = 0.0
+pitch_scale = 0.1
+autoplay = false
+mix_target = 0
+bus = "Master"
+
+[node name="Ennemy" type="AudioStreamPlayer" parent="." index="5"]
+
+stream = ExtResource( 6 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+
+[node name="Hit" type="AudioStreamPlayer" parent="." index="6"]
+
+stream = ExtResource( 7 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+
+[node name="Lost" type="AudioStreamPlayer" parent="." index="7"]
+
+stream = ExtResource( 8 )
 volume_db = 0.0
 pitch_scale = 1.0
 autoplay = false

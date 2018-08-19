@@ -28,21 +28,28 @@ func _set_percentage(val):
 		_tween = Tween.new()
 		_tween.connect("tween_completed", self, "_tween_completed")
 		add_child(_tween)
-		_tween_completed()
+		_tween_completed(null, ":_update_secondary")
 
 func _get_percentage():
 	return percentage
 
-func _tween_completed(a = null,b = null):
+func _tween_completed(obj = null, path = null):
+	if path != ":_update_secondary": return
+	
 	if _values.size() > 0:
 		var next = _values.pop_front()
 		percentage = next
 		var target = width * percentage
 		_tween.interpolate_method(self, "_update_width", lifebar_rect.size.x, target, 0.5,  Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		_tween.interpolate_method(self, "_update_secondary", lifebar_rect.size.x, target, 1, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 		_tween.start()
 	else:
 		remove_child(_tween)
 		_tween = null
+
+func _update_secondary(size):
+	secondary_rect.size.x =size
+	update()
 
 func _update_width(size):
 	lifebar_rect.size.x = size
@@ -56,5 +63,6 @@ func _ready():
 
 func _draw():
 	draw_rect(outline_rect, outline_color, false)
-	# draw_rect(secondary_rect, secondary_color, true)
+	if tweening:
+		draw_rect(secondary_rect, secondary_color, true)
 	draw_rect(lifebar_rect, inside_color, true)

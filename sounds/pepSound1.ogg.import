@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/pepSound1.ogg-e52e909e092dd8032a82265e792726ea.oggstr"
+
+[deps]
+
+source_file="res://sounds/pepSound1.ogg"
+dest_files=[ "res://.import/pepSound1.ogg-e52e909e092dd8032a82265e792726ea.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

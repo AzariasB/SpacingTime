@@ -1,18 +1,22 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://scripts/Body.gd" type="Script" id=2]
 [ext_resource path="res://images/playerShip1_blue.png" type="Texture" id=3]
-[ext_resource path="res://images/fire06.png" type="Texture" id=4]
-[ext_resource path="res://images/fire07.png" type="Texture" id=5]
-[ext_resource path="res://images/fire04.png" type="Texture" id=6]
-[ext_resource path="res://images/fire05.png" type="Texture" id=7]
+[ext_resource path="res://images/fire04.png" type="Texture" id=4]
+[ext_resource path="res://images/fire05.png" type="Texture" id=5]
+[ext_resource path="res://images/fire06.png" type="Texture" id=6]
+[ext_resource path="res://images/fire07.png" type="Texture" id=7]
 [ext_resource path="res://scenes/Weapon.tscn" type="PackedScene" id=8]
 [ext_resource path="res://images/effects/star2.png" type="Texture" id=9]
-[ext_resource path="res://scripts/PlayerLife.gd" type="Script" id=10]
-[ext_resource path="res://font/Kenney Rocket.ttf" type="DynamicFontData" id=11]
-[ext_resource path="res://scripts/ScoreLabel.gd" type="Script" id=12]
-[ext_resource path="res://images/ui/buttonBlue.png" type="Texture" id=13]
+[ext_resource path="res://scripts/PlayerHUD.gd" type="Script" id=10]
+[ext_resource path="res://scripts/PlayerLife.gd" type="Script" id=11]
+[ext_resource path="res://font/Kenney Rocket.ttf" type="DynamicFontData" id=12]
+[ext_resource path="res://scripts/ScoreLabel.gd" type="Script" id=13]
+[ext_resource path="res://images/ui/green_button00.png" type="Texture" id=14]
+[ext_resource path="res://images/ui/green_button03.png" type="Texture" id=15]
+[ext_resource path="res://images/ui/green_button02.png" type="Texture" id=16]
+[ext_resource path="res://images/ui/green_button01.png" type="Texture" id=17]
 
 [sub_resource type="SpriteFrames" id=1]
 
@@ -24,13 +28,13 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 4 ), ExtResource( 5 ) ],
 "loop": true,
-"name": "accelerate",
-"speed": 5.0
+"name": "deccelerate",
+"speed": 10.0
 }, {
 "frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
 "loop": true,
-"name": "deccelerate",
-"speed": 10.0
+"name": "accelerate",
+"speed": 5.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
@@ -186,7 +190,7 @@ _sections_unfolded = [ "Initial Velocity", "Scale" ]
 size = 20
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 11 )
+font_data = ExtResource( 12 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="StyleBoxEmpty" id=16]
@@ -201,16 +205,16 @@ content_margin_bottom = -1.0
 size = 30
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 11 )
+font_data = ExtResource( 12 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=18]
+[sub_resource type="DynamicFont" id=19]
 
-size = 20
+size = 25
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 11 )
-_sections_unfolded = [ "Settings" ]
+font_data = ExtResource( 12 )
+_sections_unfolded = [ "Font", "Settings" ]
 
 [node name="Player" type="Node"]
 
@@ -223,6 +227,7 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="PlayerBody" type="RigidBody2D" parent="Node2D" index="0"]
 
+editor/display_folded = true
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -423,29 +428,29 @@ _sections_unfolded = [ "Process Material", "Textures", "Time" ]
 
 [node name="PlayerHUD" type="CanvasLayer" parent="." index="1"]
 
-editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+script = ExtResource( 10 )
 
 [node name="Health" type="Node2D" parent="PlayerHUD" index="0"]
 
 position = Vector2( 5, 9 )
-script = ExtResource( 10 )
+script = ExtResource( 11 )
 _sections_unfolded = [ "Transform" ]
 tweening = true
 width = 400.0
 height = 10.0
 inside_color = Color( 0.0416107, 0.394531, 0.0719398, 1 )
 outline_color = Color( 1, 1, 1, 1 )
-secondary_color = null
+secondary_color = Color( 0.0530548, 0.714844, 0.111881, 1 )
 
 [node name="Boost" type="Node2D" parent="PlayerHUD" index="1"]
 
 position = Vector2( 300, 9 )
-script = ExtResource( 10 )
+script = ExtResource( 11 )
 _sections_unfolded = [ "Transform" ]
 tweening = false
 width = 400.0
@@ -457,7 +462,7 @@ secondary_color = null
 [node name="TimeControl" type="Node2D" parent="PlayerHUD" index="2"]
 
 position = Vector2( 6, 290.66 )
-script = ExtResource( 10 )
+script = ExtResource( 11 )
 _sections_unfolded = [ "Transform" ]
 tweening = false
 width = 1000.0
@@ -488,7 +493,7 @@ valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script = ExtResource( 12 )
+script = ExtResource( 13 )
 _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
 [node name="EndScreen" type="Node2D" parent="PlayerHUD" index="4"]
@@ -525,24 +530,29 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 398.0
-margin_top = 357.0
-margin_right = 620.0
-margin_bottom = 397.0
+margin_left = 409.0
+margin_top = 341.0
+margin_right = 599.0
+margin_bottom = 390.0
+grow_horizontal = 0
+grow_vertical = 0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
+size_flags_horizontal = 2
+size_flags_vertical = 2
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 13 )
-texture_pressed = ExtResource( 13 )
-texture_hover = ExtResource( 13 )
+texture_normal = ExtResource( 14 )
+texture_pressed = ExtResource( 15 )
+texture_hover = ExtResource( 16 )
+texture_focused = ExtResource( 17 )
+stretch_mode = 6
+_sections_unfolded = [ "Anchor", "Grow Direction", "Size Flags", "Textures" ]
 
 [node name="Label" type="Label" parent="PlayerHUD/EndScreen/RestartButton" index="0"]
 
@@ -550,24 +560,75 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 8.0
-margin_right = 218.0
-margin_bottom = 38.0
+margin_right = 190.0
+margin_bottom = 43.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 18 )
-custom_colors/font_color = Color( 0.13176, 0.613281, 0.161855, 1 )
+custom_fonts/font = SubResource( 19 )
 text = "Restart"
 align = 1
 valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "custom_colors", "custom_fonts" ]
+_sections_unfolded = [ "Anchor", "Rect", "custom_fonts" ]
+
+[node name="MenuButton" type="TextureButton" parent="PlayerHUD/EndScreen" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 411.0
+margin_top = 431.0
+margin_right = 601.0
+margin_bottom = 480.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 14 )
+texture_pressed = ExtResource( 15 )
+texture_hover = ExtResource( 16 )
+texture_focused = ExtResource( 17 )
+stretch_mode = 6
+_sections_unfolded = [ "Anchor", "Grow Direction", "Size Flags", "Textures" ]
+
+[node name="Label" type="Label" parent="PlayerHUD/EndScreen/MenuButton" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 190.0
+margin_bottom = 43.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 19 )
+text = "Menu"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Anchor", "Rect", "custom_fonts" ]
 
 [node name="TimeCooldown" type="Timer" parent="." index="2"]
 

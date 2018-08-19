@@ -12,6 +12,9 @@ config_version=3
 
 config/name="SpaceTimeTraveler"
 run/main_scene="res://scenes/Menu.tscn"
+run/disable_stdout=true
+run/disable_stderr=true
+boot_splash/image="res://images/ema_games.png"
 config/icon="res://images/playerShip1_blue.png"
 
 [autoload]

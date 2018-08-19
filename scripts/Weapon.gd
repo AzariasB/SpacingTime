@@ -20,8 +20,7 @@ func try_shoot():
 	bullet.global_position = global_position
 	bullet.linear_velocity = Vector2(cos(rot), sin(rot)) * bullet_speed
 	bullet.angular_velocity = 0
-	get_tree().root.add_child(bullet)
-	add_child(bullet)
+	get_tree().root.get_node("/root/Root").add_child(bullet)
 
 func shoot():
 	if $ResetTimer.is_stopped():

@@ -12,9 +12,9 @@ export(Texture) var boost_texture  = null
 
 func _ready():
 	$UfoTimer.connect("timeout", self, "spawn_ennemy")
-	if get_node("AsteroidTimer") != null:
+	if has_node("AsteroidTimer"):
 		$AsteroidTimer.connect("timeout", self, "spawn_asteroid")
-	if get_node("PowerupsTimer") != null:
+	if has_node("PowerupsTimer"):
 		$PowerupsTimer.connect("timeout", self, "spawn_powerup")
 
 func spawn_ennemy():

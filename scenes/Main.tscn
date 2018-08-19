@@ -28,7 +28,7 @@ _sections_unfolded = [ "Resource" ]
 render_priority = 0
 shader = SubResource( 1 )
 
-[node name="Root" type="Node" index="0"]
+[node name="Root" type="Node"]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." index="0"]
 
@@ -119,7 +119,7 @@ autostart = true
 stream = ExtResource( 7 )
 volume_db = 0.0
 pitch_scale = 1.0
-autoplay = false
+autoplay = true
 mix_target = 0
 bus = "Master"
 

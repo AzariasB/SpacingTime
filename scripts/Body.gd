@@ -14,25 +14,28 @@ var time_control = max_time_control
 var tween_values = [Color(1,1,1,1), Color(1,0,0,0.5)]
 var flipped = false
 
-var debris = load("res://scenes/Debris.tscn")
-
 onready var cam = $Camera2D
 onready var tween = $Tween
 onready var dead_particles = get_node("../DeadExplosion")
 onready var health = max_health
 onready var boost = max_boost
+onready var HUD = get_node("../../PlayerHUD")
+onready var sounds = get_tree().root.get_node("/root/Sounds")
+
 
 var invicible_timer = null
 
 func _ready():
 	globals = get_tree().root.get_node("/root/globals")
 	set_process(true)
-	get_node("../../PlayerHUD/EndScreen/RestartButton").connect("pressed", get_tree(), "reload_current_scene")
+	sounds.get_node("Engine").play()
 
 
 func _lost():
 	globals.player_lost = true
-	get_node("../../PlayerHUD/EndScreen").visible = true
+	HUD.get_node("EndScreen").visible = true
+	sounds.get_node("Engine").stop()
+	sounds.get_node("Lost").play()
 	dead_particles.visible = true
 	dead_particles.global_position = get_global_transform_with_canvas().origin
 	dead_particles.emitting = true
@@ -41,7 +44,7 @@ func _lost():
 func _add_boost(add_b):
 	if add_b == 0: return boost <= 0
 	boost = clamp(boost + add_b, 0, max_boost)
-	get_node("../../PlayerHUD/Boost").percentage = boost / max_boost
+	HUD.get_node("Boost").percentage = boost / max_boost
 	return boost <= 0
 
 func get_input(dt):
@@ -96,13 +99,12 @@ func _physics_process(delta):
 	
 	var bodies = $Area2D.get_overlapping_bodies()
 	if bodies.size() > 0:
-		print(bodies.size())
 		_process_hit(bodies[0])
 
 func _add_health(add):
 	if add == 0: return health <= 0
 	health = clamp(health + add, 0, max_health)
-	get_node("../../PlayerHUD/Health").percentage = health / max_health
+	HUD.get_node("Health").percentage = health / max_health
 	
 	if health <= 0:
 		_lost()
@@ -121,6 +123,7 @@ func _process_hit(body):
 		_collect_powerup(body)
 		return
 	
+	sounds.get_node("Hit").play()
 	$Area2D/CollisionPolygon2D2.disabled = true
 	invicible_timer = Timer.new()
 	invicible_timer.wait_time = invincible_time
@@ -132,7 +135,7 @@ func _process_hit(body):
 	tween.connect("tween_completed", self, "_start_tween")
 
 func _collect_powerup(body):
-	get_tree().root.get_node("/root/Sounds/Powerup").play()
+	sounds.get_node("Powerup").play()
 	var powerup = body.get_parent()
 	var b_type = powerup.type
 	if b_type == powerup.POW_HEALTH:
