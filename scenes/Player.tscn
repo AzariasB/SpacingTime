@@ -1,17 +1,18 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
-[ext_resource path="res://scripts/Body.gd" type="Script" id=1]
-[ext_resource path="res://images/playerShip1_blue.png" type="Texture" id=2]
-[ext_resource path="res://images/fire06.png" type="Texture" id=3]
-[ext_resource path="res://images/fire07.png" type="Texture" id=4]
-[ext_resource path="res://images/fire04.png" type="Texture" id=5]
-[ext_resource path="res://images/fire05.png" type="Texture" id=6]
-[ext_resource path="res://scenes/Weapon.tscn" type="PackedScene" id=7]
-[ext_resource path="res://images/effects/star2.png" type="Texture" id=8]
-[ext_resource path="res://scripts/PlayerLife.gd" type="Script" id=9]
-[ext_resource path="res://font/Kenney Rocket.ttf" type="DynamicFontData" id=10]
-[ext_resource path="res://scripts/ScoreLabel.gd" type="Script" id=11]
-[ext_resource path="res://images/ui/buttonBlue.png" type="Texture" id=12]
+[ext_resource path="res://scripts/Player.gd" type="Script" id=1]
+[ext_resource path="res://scripts/Body.gd" type="Script" id=2]
+[ext_resource path="res://images/playerShip1_blue.png" type="Texture" id=3]
+[ext_resource path="res://images/fire06.png" type="Texture" id=4]
+[ext_resource path="res://images/fire07.png" type="Texture" id=5]
+[ext_resource path="res://images/fire04.png" type="Texture" id=6]
+[ext_resource path="res://images/fire05.png" type="Texture" id=7]
+[ext_resource path="res://scenes/Weapon.tscn" type="PackedScene" id=8]
+[ext_resource path="res://images/effects/star2.png" type="Texture" id=9]
+[ext_resource path="res://scripts/PlayerLife.gd" type="Script" id=10]
+[ext_resource path="res://font/Kenney Rocket.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://scripts/ScoreLabel.gd" type="Script" id=12]
+[ext_resource path="res://images/ui/buttonBlue.png" type="Texture" id=13]
 
 [sub_resource type="SpriteFrames" id=1]
 
@@ -21,12 +22,12 @@ animations = [ {
 "name": "default",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
+"frames": [ ExtResource( 4 ), ExtResource( 5 ) ],
 "loop": true,
 "name": "accelerate",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 6 ) ],
+"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
 "loop": true,
 "name": "deccelerate",
 "speed": 10.0
@@ -115,31 +116,31 @@ anim_offset_random = 0.0
 anim_loop = false
 _sections_unfolded = [ "Color", "Hue Variation", "Trail" ]
 
-[sub_resource type="Gradient" id=14]
+[sub_resource type="Gradient" id=10]
 
 offsets = PoolRealArray( 0, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=15]
+[sub_resource type="GradientTexture" id=11]
 
 flags = 4
-gradient = SubResource( 14 )
+gradient = SubResource( 10 )
 width = 2048
 
-[sub_resource type="Curve" id=16]
+[sub_resource type="Curve" id=12]
 
 min_value = 0.0
 max_value = 1.0
 bake_resolution = 100
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.467657 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=17]
+[sub_resource type="CurveTexture" id=13]
 
 flags = 4
 width = 2048
-curve = SubResource( 16 )
+curve = SubResource( 12 )
 
-[sub_resource type="ParticlesMaterial" id=13]
+[sub_resource type="ParticlesMaterial" id=14]
 
 render_priority = 0
 trail_divisor = 1
@@ -169,8 +170,8 @@ angle = 0.0
 angle_random = 0.0
 scale = 2.0
 scale_random = 0.0
-scale_curve = SubResource( 17 )
-color_ramp = SubResource( 15 )
+scale_curve = SubResource( 13 )
+color_ramp = SubResource( 11 )
 hue_variation = 0.0
 hue_variation_random = 0.0
 anim_speed = 0.0
@@ -180,38 +181,41 @@ anim_offset_random = 0.0
 anim_loop = false
 _sections_unfolded = [ "Initial Velocity", "Scale" ]
 
-[sub_resource type="DynamicFont" id=18]
+[sub_resource type="DynamicFont" id=15]
 
 size = 20
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 10 )
+font_data = ExtResource( 11 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="StyleBoxEmpty" id=10]
+[sub_resource type="StyleBoxEmpty" id=16]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
 content_margin_top = -1.0
 content_margin_bottom = -1.0
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=17]
 
 size = 30
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 10 )
+font_data = ExtResource( 11 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="DynamicFont" id=18]
 
 size = 20
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 10 )
+font_data = ExtResource( 11 )
 _sections_unfolded = [ "Settings" ]
 
-[node name="Player" type="Node"]
+[node name="Player" type="Node" index="0"]
+
+script = ExtResource( 1 )
+max_timecontrol = 100.0
 
 [node name="Node2D" type="Node2D" parent="." index="0"]
 
@@ -238,7 +242,7 @@ linear_velocity = Vector2( 0, 0 )
 linear_damp = -1.0
 angular_velocity = 0.0
 angular_damp = 5.0
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 _sections_unfolded = [ "Applied Forces", "Linear", "Transform" ]
 rotation_speed = 200
 move_speed = 8000
@@ -280,7 +284,7 @@ _sections_unfolded = [ "Limit", "Smoothing" ]
 position = Vector2( -0.387421, 1.16227 )
 rotation = 1.5708
 scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="LeftPropeller" type="AnimatedSprite" parent="Node2D/PlayerBody/Sprite" index="0"]
@@ -299,13 +303,13 @@ animation = "default"
 playing = true
 _sections_unfolded = [ "Transform" ]
 
-[node name="LeftWeapon" parent="Node2D/PlayerBody/Sprite" index="2" instance=ExtResource( 7 )]
+[node name="LeftWeapon" parent="Node2D/PlayerBody/Sprite" index="2" instance=ExtResource( 8 )]
 
 position = Vector2( -46.335, -11.8593 )
 scale = Vector2( 0.24058, 0.24058 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="RightWeapon" parent="Node2D/PlayerBody/Sprite" index="3" instance=ExtResource( 7 )]
+[node name="RightWeapon" parent="Node2D/PlayerBody/Sprite" index="3" instance=ExtResource( 8 )]
 
 position = Vector2( 47.7609, -11.8168 )
 scale = Vector2( 0.24058, 0.24058 )
@@ -411,8 +415,8 @@ fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = true
 draw_order = 0
-process_material = SubResource( 13 )
-texture = ExtResource( 8 )
+process_material = SubResource( 14 )
+texture = ExtResource( 9 )
 normal_map = null
 h_frames = 1
 v_frames = 1
@@ -420,6 +424,7 @@ _sections_unfolded = [ "Process Material", "Textures", "Time" ]
 
 [node name="PlayerHUD" type="CanvasLayer" parent="." index="1"]
 
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -429,7 +434,7 @@ transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 [node name="Health" type="Node2D" parent="PlayerHUD" index="0"]
 
 position = Vector2( 5, 9 )
-script = ExtResource( 9 )
+script = ExtResource( 10 )
 _sections_unfolded = [ "Transform" ]
 tweening = true
 width = 400.0
@@ -441,7 +446,7 @@ secondary_color = null
 [node name="Boost" type="Node2D" parent="PlayerHUD" index="1"]
 
 position = Vector2( 300, 9 )
-script = ExtResource( 9 )
+script = ExtResource( 10 )
 _sections_unfolded = [ "Transform" ]
 tweening = false
 width = 400.0
@@ -450,15 +455,26 @@ inside_color = Color( 0.110901, 0.379866, 0.617188, 1 )
 outline_color = Color( 1, 1, 1, 1 )
 secondary_color = null
 
-[node name="ScoreLabel" type="Label" parent="PlayerHUD" index="2"]
+[node name="TimeControl" type="Node2D" parent="PlayerHUD" index="2"]
+
+position = Vector2( 6, 290.66 )
+script = ExtResource( 10 )
+_sections_unfolded = [ "Transform" ]
+tweening = false
+width = 1000.0
+height = 10.0
+inside_color = Color( 0.746094, 0.746094, 0.746094, 1 )
+outline_color = Color( 0, 0, 0, 1 )
+secondary_color = Color( 1, 1, 1, 1 )
+
+[node name="ScoreLabel" type="Label" parent="PlayerHUD" index="3"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 515.0
 margin_top = 4.0
-margin_right = 579.0
+margin_right = 1022.0
 margin_bottom = 58.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -466,17 +482,17 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 15 )
 text = "0"
 align = 1
 valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script = ExtResource( 11 )
+script = ExtResource( 12 )
 _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
-[node name="EndScreen" type="Node2D" parent="PlayerHUD" index="3"]
+[node name="EndScreen" type="Node2D" parent="PlayerHUD" index="4"]
 
 visible = false
 
@@ -496,8 +512,8 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_styles/normal = SubResource( 10 )
-custom_fonts/font = SubResource( 11 )
+custom_styles/normal = SubResource( 16 )
+custom_fonts/font = SubResource( 17 )
 text = "You lost"
 percent_visible = 1.0
 lines_skipped = 0
@@ -525,9 +541,9 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 12 )
-texture_pressed = ExtResource( 12 )
-texture_hover = ExtResource( 12 )
+texture_normal = ExtResource( 13 )
+texture_pressed = ExtResource( 13 )
+texture_hover = ExtResource( 13 )
 
 [node name="Label" type="Label" parent="PlayerHUD/EndScreen/RestartButton" index="0"]
 
@@ -544,7 +560,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 18 )
 custom_colors/font_color = Color( 0.13176, 0.613281, 0.161855, 1 )
 text = "Restart"
 align = 1
@@ -553,5 +569,12 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_colors", "custom_fonts" ]
+
+[node name="TimeCooldown" type="Timer" parent="." index="2"]
+
+process_mode = 1
+wait_time = 2.0
+one_shot = true
+autostart = false
 
 

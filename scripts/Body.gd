@@ -103,7 +103,14 @@ func _physics_process(delta):
 
 
 func _process_hit(body):
-	health -= max_health
+	print(body.name)
+	
+	if body.name == "AsteroidBody":
+		health -= 10
+	elif body.name == "EnnemyBody":
+		health -= 20
+	elif body.name == "SmallAsteroidBody":
+		health -= 5
 	get_node("../../PlayerHUD/Health").percentage = health / max_health
 	
 	if health <= 0:

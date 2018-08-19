@@ -3,6 +3,7 @@ extends Node
 signal score_changed
 var BORDERS = Rect2(-1000, -500, 2000, 1000)
 var score = 0 setget _set_score, _get_score
+var remaining_timecontrol = 0
 
 func increment_score():
 	_set_score(score + 1)

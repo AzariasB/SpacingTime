@@ -13,9 +13,11 @@ var path_type = PATH_TYPE.SIMPLE
 var BORDERS
 var f_path
 
+onready var globals = get_tree().root.get_node("/root/globals")
+
 func _ready():
 	f_path = $Path2D/PathFollow2D
-	BORDERS = get_tree().root.get_node("/root/globals").BORDERS
+	BORDERS = globals.BORDERS
 	$Path2D.curve = Curve2D.new()
 	create_path()
 	set_process(true)
@@ -43,7 +45,7 @@ func create_path():
 	$Path2D.curve.add_point(ending_pos)	
 
 func _physics_process(delta):
-	if Input.is_action_pressed("time_travel"):
+	if Input.is_action_pressed("time_travel") and globals.remaining_timecontrol > 0:
 		var u_of = f_path.unit_offset - (delta / 10)
 		f_path.unit_offset = max(0, u_of)
 	else:
