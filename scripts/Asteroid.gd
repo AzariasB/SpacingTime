@@ -4,7 +4,7 @@ var BORDERS
 var global
 var small = load("res://scenes/SmallAsteroid.tscn")
 var puff = load("res://scenes/Puff.tscn")
-onready var timer = $Timer
+onready var timer = null
 
 
 func _ready():
@@ -13,6 +13,8 @@ func _ready():
 	global = get_tree().root.get_node("/root/globals")
 	if name != "SmallAsteroidBody":
 		spawn()
+		timer = $Timer
+		$Timer.connect("timeout", self, "_destroy_timer")
 	set_process(true)
 	self.connect("body_entered", self, "body_collide")
 

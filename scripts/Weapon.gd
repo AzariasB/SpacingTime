@@ -13,6 +13,7 @@ func try_shoot():
 	if not is_shooting:
 		$ResetTimer.stop()
 		return
+	get_tree().root.get_node("/root/Sounds/Shoot").play()
 	var rot = get_global_transform().get_rotation() - PI / 2
 	var bullet = bullet_type.instance()
 	bullet.global_rotation = global_rotation

@@ -17,6 +17,7 @@ config/icon="res://images/playerShip1_blue.png"
 [autoload]
 
 globals="*res://scripts/globals.gd"
+Sounds="*res://scenes/Sounds.tscn"
 
 [display]
 

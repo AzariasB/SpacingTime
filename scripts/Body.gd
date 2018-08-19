@@ -1,8 +1,5 @@
 extends RigidBody2D
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
 export(int) var rotation_speed = 200
 export(int) var move_speed = 2000
 export(float) var invincible_time = 2.0
@@ -135,6 +132,7 @@ func _process_hit(body):
 	tween.connect("tween_completed", self, "_start_tween")
 
 func _collect_powerup(body):
+	get_tree().root.get_node("/root/Sounds/Powerup").play()
 	var powerup = body.get_parent()
 	var b_type = powerup.type
 	if b_type == powerup.POW_HEALTH:

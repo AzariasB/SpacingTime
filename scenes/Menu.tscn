@@ -333,7 +333,7 @@ autostart = true
 
 position = Vector2( 533.939, 263.561 )
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="3"]
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="." index="3"]
 
 stream = ExtResource( 14 )
 volume_db = 0.0
